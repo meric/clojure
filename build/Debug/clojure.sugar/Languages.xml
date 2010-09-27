@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<language id="com.meric.Clojure">
+		<root-zone>sourcecode.clojure</root-zone>
+		
+		<syntax-name>sourcecode.clojure</syntax-name>
+		
+		<name>Clojure</name>
+		
+		<detectors>
+			<!-- Checks for .clj extension -->
+			<extension>clj</extension>
+			<!-- Checks for clohjure shebang -->
+			<match-content lines="1">#!/[\w/ ]+clojure</match-content>
+		</detectors>
+	</language>
+	
+	<meta>
+		<name>Clojure</name>
+		<description>A full syntax description of the Clojure programming language</description>
+		<author>Eric Man</author>
+		<identifier>com.meric.Sugar.Python</identifier>
+		<version status="preview">0.00</version>
+		<download format="git">git://github.com/meric/clojure.sugar.git</download>
+		<url>http://github.com/meric/clojure.sugar/</url>
+	</meta>
+</settings>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-recipes>
+	<snippet id="com.meric.TextActions.Clojure.OpenSquareBracket" category="hidden">
+		<title>Open Square Bracket</title>
+		<text-trigger key-equivalent="["></text-trigger>
+		<text>[$1]$0</text>
+		<syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	</snippet>
+	<snippet id="com.meric.TextActions.Clojure.OpenCurlyBrace" category="hidden">
+		<title>Open Curly Brace</title>
+		<text-trigger key-equivalent="{"></text-trigger>
+		<text>{$1}$0</text>
+		<syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	</snippet>
+	<snippet id="com.meric.TextActions.Clojure.OpenParenthesis" category="hidden">
+		<title>Open Parenthesis</title>
+		<text-trigger key-equivalent="("></text-trigger>
+		<text>($1)$0</text>
+		<syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	</snippet>
+	<action id="com.meric.traverse.bfs.next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.method.bfs">
+	  <class>TEALoader</class>
+	  <title>Next by Breadth</title>
+	  <key-equivalent>option →</key-equivalent>
+	  <setup>
+	    <script>bfs_next.clj</script>
+	    <input>selection</input>
+	    <alternate>snippet</alternate>
+	    <output>text</output>
+	    <undo_name>Undo Next</undo_name>
+	    <syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	  </setup>
+	</action>
+	<action id="com.meric.traverse.dfs.next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.method.dfs">
+	  <class>TEALoader</class>
+	  <title>Next by Depth</title>
+	  <key-equivalent>option ↓</key-equivalent>
+	  <setup>
+	    <script>dfs_next.sh</script>
+	    <input>selection</input>
+	    <alternate>document</alternate>
+	    <output>snippet</output>
+	    <undo_name>Undo Next</undo_name>
+	    <syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	  </setup>
+	</action>
+</action-recipes>

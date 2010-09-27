@@ -1,0 +1,390 @@
+// !$*UTF8*$!
+{
+	075CF8731250FE3500BB8F8F /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	075CF8741250FE3500BB8F8F /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	075CF87F1250FE9500BB8F8F /* Clojure.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {622, 602}}";
+			sepNavSelRange = "{187, 0}";
+			sepNavVisRange = "{0, 525}";
+			sepNavWindowFrame = "{{15, 8}, {936, 765}}";
+		};
+	};
+	075CF8801250FE9500BB8F8F /* Clojure.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {652, 616}}";
+			sepNavSelRange = "{944, 0}";
+			sepNavVisRange = "{17, 999}";
+		};
+	};
+	075CF8A91250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C167EFE841241C02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 45;
+		vrLoc = 0;
+	};
+	075CF8AB1250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+	075CF8AC1250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF8801250FE9500BB8F8F /* Clojure.m */;
+		name = "Clojure.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 180;
+		vrLoc = 0;
+	};
+	075CF8AD1250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+	075CF8AE1250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF8801250FE9500BB8F8F /* Clojure.m */;
+		name = "Clojure.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 180;
+		vrLoc = 0;
+	};
+	075CF8AF1250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+	075CF8B01250FF7300BB8F8F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D5B49B7048680CD000E48DA /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/Eric/Desktop/clojure/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	075CF8B11250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+	075CF8B41250FF7300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C167EFE841241C02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 45;
+		vrLoc = 0;
+	};
+	075CF8E41250FFEC00BB8F8F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 075CF8B71250FF7E00BB8F8F /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/Eric/Desktop/clojure/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	075CF9011251006F00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF9021251006F00BB8F8F /* Languages.xml */;
+		name = "Languages.xml: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 815;
+		vrLoc = 0;
+	};
+	075CF9021251006F00BB8F8F /* Languages.xml */ = {
+		isa = PBXFileReference;
+		name = Languages.xml;
+		path = /Users/Eric/Desktop/clojure/Content/Languages.xml;
+		sourceTree = "<absolute>";
+	};
+	075CF9031251006F00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF9041251006F00BB8F8F /* ClojureSyntax.xml */;
+		name = "ClojureSyntax.xml: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1114;
+		vrLoc = 0;
+	};
+	075CF9041251006F00BB8F8F /* ClojureSyntax.xml */ = {
+		isa = PBXFileReference;
+		name = ClojureSyntax.xml;
+		path = /Users/Eric/Desktop/clojure/Content/Syntaxes/ClojureSyntax.xml;
+		sourceTree = "<absolute>";
+	};
+	075CF9061251006F00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+	075CF9071251006F00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF9081251006F00BB8F8F /* Languages.xml */;
+		name = "Languages.xml: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 815;
+		vrLoc = 0;
+	};
+	075CF9081251006F00BB8F8F /* Languages.xml */ = {
+		isa = PBXFileReference;
+		name = Languages.xml;
+		path = /Users/Eric/Desktop/clojure/Content/Languages.xml;
+		sourceTree = "<absolute>";
+	};
+	075CF9091251006F00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF90A1251006F00BB8F8F /* ClojureSyntax.xml */;
+		name = "ClojureSyntax.xml: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1114;
+		vrLoc = 0;
+	};
+	075CF90A1251006F00BB8F8F /* ClojureSyntax.xml */ = {
+		isa = PBXFileReference;
+		name = ClojureSyntax.xml;
+		path = /Users/Eric/Desktop/clojure/Content/Syntaxes/ClojureSyntax.xml;
+		sourceTree = "<absolute>";
+	};
+	075CF9121251010F00BB8F8F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 075CF8B71250FF7E00BB8F8F /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/Eric/Desktop/clojure/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	075CF9141251010F00BB8F8F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 075CF8B71250FF7E00BB8F8F /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/Eric/Desktop/clojure/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	075CF9151251010F00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF8801250FE9500BB8F8F /* Clojure.m */;
+		name = "Clojure.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 180;
+		vrLoc = 0;
+	};
+	075CF91B1251019E00BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: syntax error before '-' token";
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		rLen = 0;
+		rLoc = 12;
+		rType = 1;
+	};
+	075CF91C125101A300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 14";
+		rLen = 0;
+		rLoc = 187;
+		rType = 0;
+		vrLen = 1190;
+		vrLoc = 32;
+	};
+	075CF91D125101A300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF8801250FE9500BB8F8F /* Clojure.m */;
+		name = "Clojure.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 180;
+		vrLoc = 0;
+	};
+	075CF91E125101A300BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 14";
+		rLen = 0;
+		rLoc = 187;
+		rType = 0;
+		vrLen = 1190;
+		vrLoc = 32;
+	};
+	075CF9281251025800BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF8801250FE9500BB8F8F /* Clojure.m */;
+		name = "Clojure.m: 32";
+		rLen = 0;
+		rLoc = 944;
+		rType = 0;
+		vrLen = 999;
+		vrLoc = 17;
+	};
+	075CF9291251025800BB8F8F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 075CF87F1250FE9500BB8F8F /* Clojure.h */;
+		name = "Clojure.h: 13";
+		rLen = 0;
+		rLoc = 187;
+		rType = 0;
+		vrLen = 1206;
+		vrLoc = 0;
+	};
+	089C1669FE841209C02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeTarget = 8D5B49AC048680CD000E48DA /* clojure.sugar */;
+		addToTargets = (
+			8D5B49AC048680CD000E48DA /* clojure.sugar */,
+		);
+		codeSenseManager = 075CF8741250FE3500BB8F8F /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					474,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					434,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 307297795;
+			PBXWorkspaceStateSaveDate = 307297795;
+		};
+		perUserProjectItems = {
+			075CF8A91250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8A91250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8AB1250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8AB1250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8AC1250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8AC1250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8AD1250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8AD1250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8AE1250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8AE1250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8AF1250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8AF1250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8B01250FF7300BB8F8F /* PlistBookmark */ = 075CF8B01250FF7300BB8F8F /* PlistBookmark */;
+			075CF8B11250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8B11250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8B41250FF7300BB8F8F /* PBXTextBookmark */ = 075CF8B41250FF7300BB8F8F /* PBXTextBookmark */;
+			075CF8E41250FFEC00BB8F8F /* PlistBookmark */ = 075CF8E41250FFEC00BB8F8F /* PlistBookmark */;
+			075CF9011251006F00BB8F8F /* PBXTextBookmark */ = 075CF9011251006F00BB8F8F /* PBXTextBookmark */;
+			075CF9031251006F00BB8F8F /* PBXTextBookmark */ = 075CF9031251006F00BB8F8F /* PBXTextBookmark */;
+			075CF9061251006F00BB8F8F /* PBXTextBookmark */ = 075CF9061251006F00BB8F8F /* PBXTextBookmark */;
+			075CF9071251006F00BB8F8F /* PBXTextBookmark */ = 075CF9071251006F00BB8F8F /* PBXTextBookmark */;
+			075CF9091251006F00BB8F8F /* PBXTextBookmark */ = 075CF9091251006F00BB8F8F /* PBXTextBookmark */;
+			075CF9121251010F00BB8F8F /* PlistBookmark */ = 075CF9121251010F00BB8F8F /* PlistBookmark */;
+			075CF9141251010F00BB8F8F /* PlistBookmark */ = 075CF9141251010F00BB8F8F /* PlistBookmark */;
+			075CF9151251010F00BB8F8F /* PBXTextBookmark */ = 075CF9151251010F00BB8F8F /* PBXTextBookmark */;
+			075CF91B1251019E00BB8F8F /* PBXTextBookmark */ = 075CF91B1251019E00BB8F8F /* PBXTextBookmark */;
+			075CF91C125101A300BB8F8F /* PBXTextBookmark */ = 075CF91C125101A300BB8F8F /* PBXTextBookmark */;
+			075CF91D125101A300BB8F8F /* PBXTextBookmark */ = 075CF91D125101A300BB8F8F /* PBXTextBookmark */;
+			075CF91E125101A300BB8F8F /* PBXTextBookmark */ = 075CF91E125101A300BB8F8F /* PBXTextBookmark */;
+			075CF9281251025800BB8F8F /* PBXTextBookmark */ = 075CF9281251025800BB8F8F /* PBXTextBookmark */;
+			075CF9291251025800BB8F8F /* PBXTextBookmark */ = 075CF9291251025800BB8F8F /* PBXTextBookmark */;
+		};
+		sourceControlManager = 075CF8731250FE3500BB8F8F /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	089C167EFE841241C02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {403, 253}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 45}";
+		};
+	};
+	8D5B49AC048680CD000E48DA /* clojure.sugar */ = {
+		activeExec = 0;
+	};
+}

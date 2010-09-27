@@ -1,0 +1,4 @@
+TODO
+1. Traverse expressions by BFS or DFS using keyboard
+2. REPL evaluation of expressions
+3. Auto-indentation
