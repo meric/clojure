@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-categories>
+	<category id="actions.text.Clojure" show="sub">
+	  <title>Clojure</title>
+	</category>
+	<category id="clojure.tools.traverse" show="inline separated">
+	  <title>Traverse</title>
+	</category>
+	<category id="clojure.tools.traverse.method.item" show="inline separated">
+	  <title>Item</title>
+	</category>
+	<category id="clojure.tools.traverse.method.expr" show="inline separated">
+	  <title>(...)</title>
+	</category>
+</action-categories>

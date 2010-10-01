@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-recipes>
+	<snippet id="com.meric.TextActions.Clojure.OpenSquareBracket" category="hidden">
+		<title>Open Square Bracket</title>
+		<text-trigger key-equivalent="["></text-trigger>
+		<text>[$1]$0</text>
+		<syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	</snippet>
+	<snippet id="com.meric.TextActions.Clojure.OpenCurlyBrace" category="hidden">
+		<title>Open Curly Brace</title>
+		<text-trigger key-equivalent="{"></text-trigger>
+		<text>{$1}$0</text>
+		<syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	</snippet>
+	<snippet id="com.meric.TextActions.Clojure.OpenParenthesis" category="hidden">
+		<title>Open Parenthesis</title>
+		<text-trigger key-equivalent="("></text-trigger>
+		<text>($1)$0</text>
+		<syntax-context>clojure, clojure *:not(literal.string, metadata.comment)</syntax-context>
+	</snippet>
+	<action id="com.meric.traverse.item.next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
+	  <class>CJZoneTree</class>
+	  <title>Next Item</title>
+	  <key-equivalent>cmd option →</key-equivalent>
+	  <setup>
+      <action>next</action>
+      <expression>.+</expression>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+  <action id="com.meric.traverse.item.previous" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
+	  <class>CJZoneTree</class>
+	  <title>Previous Item</title>
+	  <key-equivalent>cmd option ←</key-equivalent>
+	  <setup>
+      <action>previous</action>
+      <expression>.+</expression>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+	<action id="com.meric.traverse.expr.dfs.next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
+	  <class>CJZoneTree</class>
+	  <title>Next (...)</title>
+	  <key-equivalent>option ↓</key-equivalent>
+	  <setup>
+      <action>next</action>
+      <expression>^\(.*\)$|^\[.*\]$|^#?\{.*\}$</expression>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+  <action id="com.meric.traverse.expr.dfs.previous" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
+	  <class>CJZoneTree</class>
+	  <title>Previous (...)</title>
+	  <key-equivalent>option ↑</key-equivalent>
+	  <setup>
+      <action>previous</action>
+      <expression>^\(.*\)$|^\[.*\]$|^#?\{.*\}$</expression>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+</action-recipes>
