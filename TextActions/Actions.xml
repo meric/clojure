@@ -21,30 +21,31 @@
 	<action id="com.meric.traverse.item.next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
 	  <class>CJZoneTree</class>
 	  <title>Next Item</title>
-	  <key-equivalent>cmd option →</key-equivalent>
+	  <key-equivalent>option →</key-equivalent>
 	  <setup>
       <action>next</action>
-      <zone>literal, keyword, container.expression.quote</zone>
+      <zone>container.expression.s-expr > *:not(delimiter, s-expr)</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
   <action id="com.meric.traverse.item.previous" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
 	  <class>CJZoneTree</class>
 	  <title>Previous Item</title>
-	  <key-equivalent>cmd option ←</key-equivalent>
+	  <key-equivalent>option ←</key-equivalent>
 	  <setup>
       <action>previous</action>
-      <zone>literal, keyword, container.expression.quote</zone>
+      <zone>container.expression.s-expr > *:not(delimiter, s-expr)</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
 	<action id="com.meric.traverse.expr.dfs.next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
 	  <class>CJZoneTree</class>
 	  <title>Next (...)</title>
-	  <key-equivalent>option ↓</key-equivalent>
+	  <!--<key-equivalent>cmd option ↓</key-equivalent>-->
+    <key-equivalent>option ↓</key-equivalent>
 	  <setup>
       <action>next</action>
-      <zone>container.expression.s-expr, literal.collection, container.expression.s-expr-comment</zone>
+      <zone>container.expression.s-expr, literal.collection</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
@@ -54,7 +55,7 @@
 	  <key-equivalent>option ↑</key-equivalent>
 	  <setup>
       <action>previous</action>
-      <zone>container.expression.s-expr, literal.collection, container.expression.s-expr-comment</zone>
+      <zone>container.expression.s-expr, literal.collection</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>

@@ -18,6 +18,7 @@
     	    <include collection="literal.collection" />
     	    <include collection="metadata.comment" />
     	    <include collection="container.expression.quote" />
+          
     	</collection>
     	
     	<collection name="metadata.comment">
@@ -41,14 +42,14 @@
     				<expression>\)</expression>
     			</ends-with>
     			<subzones>
-    	        	<include collection="container.expression.s-expr-comment" />
-    	        </subzones>
+            <include collection="container.expression.s-expr.comment" />
+          </subzones>
     		</zone>
     	</collection>
-    	<collection name="container.expression.s-expr-comment">
+    	<collection name="container.expression.s-expr.comment">
     	    <!-- An s-expression with no highlighting-->
     	    <!-- e.g "(comment (println (+ 1 2))"-->
-			<zone name="container.expression.s-expr-comment">
+			<zone name="container.expression.s-expr.comment">
 				<starts-with>
 					<expression>\(</expression>
 				</starts-with>
@@ -56,8 +57,8 @@
 					<expression>\)</expression>
 				</ends-with>
 				<subzones>
-		        	<include collection="container.expression.s-expr-comment" />
-		        </subzones>
+          <include collection="container.expression.s-expr.comment" />
+        </subzones>
 			</zone>
     	</collection>
     	<collection name="container.expression.quote">
@@ -73,13 +74,13 @@
         	    	<capture number="1" name="delimiter.balanced.parenthesis.end" />
         	    </ends-with>
         	    <subzones>
-        	    	<include collection="container.expression.s-expr-comment" />
+        	    	<include collection="container.expression.s-expr.comment" />
         	    </subzones>
         	</zone>
         	<!-- A quoted symbol-->
         	<!-- e.g "'hello world"-->
         	<zone name="container.expression.quote">
-        	    <expression>'+[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_]*</expression>
+        	    <expression>'+[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*</expression>
         	</zone>
         	<!-- A quoted number-->
         	<!-- e.g "'100e5"-->
@@ -105,7 +106,7 @@
         <collection name="container.expression.s-expr.level-1">
             <zone name="container.expression.s-expr.level-1">
                 <starts-with>
-                	<expression>(\()[\s,]*([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_]*)|(\()</expression>
+                	<expression>(\()[\s,]*([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*)|(\()</expression>
                 	<capture number="1" name="delimiter.balanced.parenthesis.begin" />
                 	<capture number="2" name="container.expression">
                     <subzones>
@@ -125,6 +126,7 @@
                 <subzones>
                 	<include collection="container.expression" />
                 	<include collection="container.expression.s-expr" />
+                  <include collection="container.expression.symbol" />
                 </subzones>
             </zone>
         </collection>
@@ -133,7 +135,7 @@
         	<!-- e.g "(println (+ 1 2))"-->
         	<zone name="container.expression.s-expr">
     			<starts-with>
-    				<expression>(\()[\s,]*([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_]*)|(\()</expression>
+    				<expression>(\()[\s,]*([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*)|(\()</expression>
     				<capture number="1" name="delimiter.balanced.parenthesis.begin" />
     				<capture number="2" name="identifier.function" />
     				<capture number="3" name="delimiter.balanced.parenthesis.begin" />
@@ -146,7 +148,8 @@
         		<subzones>
         			<include collection="container.expression" />
         			<include collection="container.expression.s-expr" />
-        	    </subzones>
+              <include collection="container.expression.symbol" />
+            </subzones>
         	</zone>
     	</collection>
     	<collection name="x-invalid">
@@ -161,11 +164,19 @@
     	    <!-- e.g "defn"-->
     	    <zone name="keyword.definition.function">
     	        <expression>defn</expression>
+              <capture number="1" name="identifier.function" />
     	    </zone>
     	    <!-- fn keyword-->
     	    <!-- e.g "fn"-->
     	    <zone name="keyword.definition.lambda">
     	        <expression>fn</expression>
+    	    </zone>
+    	</collection>
+      <collection name="container.expression.symbol">
+    	    <!-- a symbol-->
+    	    <!-- e.g "println"-->
+    	    <zone name="container.expression.symbol">
+    	        <expression>[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*</expression>
     	    </zone>
     	</collection>
     	<collection name="literal.escape">
