@@ -1,362 +1,365 @@
 <?xml version="1.0"?>
 
 <syntax name="sourcecode.clojure">
-    <zones>
-    	<include collection="language" />
-    </zones>
-    <library>
-    	<collection name="language">
-    	    <include collection="container.expression" />
-    	    <include collection="container.expression.s-expr.level-1" />
-    	    <include collection="x-invalid" />
-    	</collection>
-    	<collection name="container.expression">
-    	    <include collection="keyword.definition" />
-    	    <include collection="literal.keyword" />
-    	    <include collection="literal.string" />
-    	    <include collection="literal.numeric" />
-    	    <include collection="literal.collection" />
-    	    <include collection="metadata.comment" />
-    	    <include collection="container.expression.quote" />
-          
-    	</collection>
-    	
-    	<collection name="metadata.comment">
-    	    <!-- Line comment-->
-    	    <!-- e.g "; (println "hello world")"-->
-    		<zone name="metadata.comment.line">
-    			<starts-with>
-    				<expression>;</expression>
+  <zones>
+    <include collection="language" />
+  </zones>
+  <library>
+    <!--
+    whitespace: [\s,]
+    name: [a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%?]*
+    -->
+    <collection name="language">
+      <include collection="metadata.comment" />
+      <include collection="container.expression.atom" />
+      <include collection="container.expression.list" />
+      <include collection="x-invalid" />
+    </collection>
+    <collection name="container.expression.atom">
+      <include collection="literal" />
+    </collection>
+    <collection name="container.expression.list">
+      <include collection="container.expression.expression" />
+    </collection>
+    <collection name="metadata.comment">
+      <!-- Line comment-->
+      <!-- e.g "; (println "hello world")"-->
+      <zone name="metadata.comment.line">
+        <starts-with>
+          <expression>;</expression>
     			</starts-with>
-    			<ends-with>
-    				<expression>\n\Z</expression>
-    			</ends-with>
-    		</zone>
-    		<!-- Block comment-->
-    		<!-- e.g "(comment (println "hello world"))"-->
-    		<zone name="metadata.comment.block">
-    			<starts-with>
-    				<expression>\(\s*comment\s*</expression>
-    			</starts-with>
-    			<ends-with>
-    				<expression>\)</expression>
-    			</ends-with>
-    			<subzones>
-            <include collection="container.expression.s-expr.comment" />
-          </subzones>
-    		</zone>
-    	</collection>
-    	<collection name="container.expression.s-expr.comment">
-    	    <!-- An s-expression with no highlighting-->
-    	    <!-- e.g "(comment (println (+ 1 2))"-->
-			<zone name="container.expression.s-expr.comment">
-				<starts-with>
-					<expression>\(</expression>
-				</starts-with>
-				<ends-with>
-					<expression>\)</expression>
-				</ends-with>
-				<subzones>
-          <include collection="container.expression.s-expr.comment" />
+        <ends-with>
+          <expression>\n\Z</expression>
+    		</ends-with>
+    	</zone>
+      <!-- Block comment-->
+      <!-- e.g "(comment (println "hello world"))"-->
+      <zone name="metadata.comment.block">
+        <starts-with>
+          <expression>\([\s,]*comment[\s,]*</expression>
+    		</starts-with>
+        <ends-with>
+          <expression>\)</expression>
+    		</ends-with>
+        <subzones>
+          <include collection="container.expression.list" />
         </subzones>
-			</zone>
-    	</collection>
-    	<collection name="container.expression.quote">
-    	    <!-- A quoted expression-->
-    	    <!-- e.g "'(println (+ 1 2))"-->
-        	<zone name="container.expression.quote">
-        	    <starts-with>
-        	    	<expression>'+(\()</expression>
-        	    	<capture number="1" name="delimiter.balanced.parenthesis.begin" />
-        	    </starts-with>
-        	    <ends-with>
-        	    	<expression>(\))</expression>
-        	    	<capture number="1" name="delimiter.balanced.parenthesis.end" />
-        	    </ends-with>
-        	    <subzones>
-        	    	<include collection="container.expression.s-expr.comment" />
-        	    </subzones>
-        	</zone>
-        	<!-- A quoted symbol-->
-        	<!-- e.g "'hello world"-->
-        	<zone name="container.expression.quote">
-        	    <expression>'+[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*</expression>
-        	</zone>
-        	<!-- A quoted number-->
-        	<!-- e.g "'100e5"-->
-        	<zone name="container.expression.quote">
-        	    <expression>'+\d+\.?\d*e\d+|'+\d+\.?\d*</expression>
-        	</zone>
-        	<!-- A quoted string-->
-        	<!-- e.g "'"hey""-->
-        	<zone name="container.expression.quote">
-        		<starts-with>
-        			<expression>'+(")</expression>
-        			<capture number="1" name="string.begin" />
-        		</starts-with>
-        		<ends-with>
-        			<expression>(\1)</expression>
-        			<capture number="1" name="string.end" />
-        		</ends-with>
-        		<subzones>
-        			<include collection="literal.escape" />
-        		</subzones>
-        	</zone>
-        </collection>
-        <collection name="container.expression.s-expr.level-1">
-            <zone name="container.expression.s-expr.level-1">
-                <starts-with>
-                	<expression>(\()[\s,]*([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*)|(\()</expression>
-                	<capture number="1" name="delimiter.balanced.parenthesis.begin" />
-                	<capture number="2" name="container.expression">
-                    <subzones>
-                      <include collection="container.expression" />
-                      <zone name="identifier.function">
-                        <expression>.+</expression>
-                      </zone>
-                    </subzones>
-                  </capture>
-                	<capture number="3" name="delimiter.balanced.parenthesis.begin" />
-                </starts-with>
-                <ends-with>
-                    <!-- Need to make it so <must have ends-with> to match zone-->
-                	<expression>(\))</expression>
-                	<capture number="1" name="delimiter.balanced.parenthesis.end" />
-                </ends-with>
-                <subzones>
-                	<include collection="container.expression" />
-                	<include collection="container.expression.s-expr" />
-                  <include collection="container.expression.symbol" />
-                </subzones>
-            </zone>
-        </collection>
-        <collection name="container.expression.s-expr">
-        	<!-- An s-expression available for decoration-->
-        	<!-- e.g "(println (+ 1 2))"-->
-        	<zone name="container.expression.s-expr">
-    			<starts-with>
-    				<expression>(\()[\s,]*([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*)|(\()</expression>
-    				<capture number="1" name="delimiter.balanced.parenthesis.begin" />
-    				<capture number="2" name="identifier.function" />
-    				<capture number="3" name="delimiter.balanced.parenthesis.begin" />
-    			</starts-with>
-        		<ends-with>
-        		    <!-- Need to make it so <must have ends-with> to match zone-->
-        			<expression>(\))</expression>
-        			<capture number="1" name="delimiter.balanced.parenthesis.end" />
-        		</ends-with>
-        		<subzones>
-        			<include collection="container.expression" />
-        			<include collection="container.expression.s-expr" />
-              <include collection="container.expression.symbol" />
-            </subzones>
-        	</zone>
-    	</collection>
-    	<collection name="x-invalid">
-    	    <!-- An extra closing bracket-->
-    	    <!-- e.g "(println (+ 1 2)))"-->
-    	    <zone name="x-invalid">
-    	        <expression>\(|\)</expression>
-    	    </zone>
-    	</collection>
-    	<collection name="keyword.definition">
-    	    <!-- defn keyword-->
-    	    <!-- e.g "defn"-->
-    	    <zone name="keyword.definition.function">
-    	        <expression>defn</expression>
-              <capture number="1" name="identifier.function" />
-    	    </zone>
-    	    <!-- fn keyword-->
-    	    <!-- e.g "fn"-->
-    	    <zone name="keyword.definition.lambda">
-    	        <expression>fn</expression>
-    	    </zone>
-    	</collection>
-      <collection name="container.expression.symbol">
-    	    <!-- a symbol-->
-    	    <!-- e.g "println"-->
-    	    <zone name="container.expression.symbol">
-    	        <expression>[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%]*</expression>
-    	    </zone>
-    	</collection>
-    	<collection name="literal.escape">
-    	    <!-- An escaped double quote-->
-    	    <!-- e.g "\""-->
-    	    <zone name="literal.escape.quote">
-    	    	<expression>(\\)(")</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A newline character-->
-    	    <!-- e.g "\n"-->
-    	    <zone name="literal.escape.newline">
-    	    	<expression>(\\)(n)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A tab character-->
-    	    <!-- e.g "\t"-->
-    	    <zone name="literal.escape.tab">
-    	    	<expression>(\\)(t)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A backspace character-->
-    	    <!-- e.g "\b"-->
-    	    <zone name="literal.escape.backspace">
-    	    	<expression>(\\)(b)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A form feed character-->
-    	    <!-- e.g "\f"-->
-    	    <zone name="literal.escape.formfeed">
-    	    	<expression>(\\)(f)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A return character-->
-    	    <!-- e.g "\r"-->
-    	    <zone name="literal.escape.carriage-return">
-    	    	<expression>(\\)(r)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A backslash character-->
-    	    <!-- e.g "\\"-->
-    	    <zone name="literal.escape.backslash">
-    	    	<expression>(\\)(\\)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	    <!-- A unicode character-->
-    	    <!-- e.g "\uDDDD"-->
-    	    <zone name="literal.escape.unicode-16">
-    	    	<expression>(\\)(u)([a-fA-F0-9]{4})</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    	<capture number="3" name="identity.hex" />
-    	    </zone>
-    	    <!-- An invalid escaped character-->
-    	    <!-- e.g "\55"-->
-    	    <zone name="x-invalid">
-    	    	<expression>(\\)(.)</expression>
-    	    	<capture number="1" name="begin" />
-    	    	<capture number="2" name="character" />
-    	    </zone>
-    	</collection>
-    	<collection name="literal.keyword">
-    	    <!-- A keyword-->
-    	    <!-- e.g ":hello-world"-->
-    	    <zone name="literal.keyword">
-    	    	<expression>\s*(\:[\w\+\-\*\!_=]+)\b</expression>
-    	    </zone>
-    	    <!-- The true keyword-->
-    	    <!-- e.g "true"-->
-    		<zone name="literal.keyword.bool.true">
-    			<expression>\b(true)\b</expression>
-    		</zone>
-    		<!-- The false keyword-->
-    		<!-- e.g "false"-->
-    		<zone name="literal.keyword.bool.false">
-    			<expression>\b(false)\b</expression>
-    		</zone>
-    		<!-- The nil keyword-->
-    		<!-- e.g "nil"-->
-    		<zone name="literal.keyword.nothing">
-    			<expression>\b(nil)\b</expression>
-    		</zone>
-    	</collection>
-    	<collection name="literal.numeric">
-    	    <!-- An exponent number-->
-    	    <!-- e.g "100e5"-->
-        	<zone name="container.expression">
-        		<expression>\b(\d+\.?\d*e\d+)\b</expression>
-        		<capture number="1" name="literal.numeric.exponent" />
-        	</zone>
-        	<!-- A float number-->
-        	<!-- e.g "5.5"-->
-    	    <zone name="container.expression">
-    	    	<expression>\b(\d+\.\d*)\b</expression>
-    	    	<capture number="1" name="literal.numeric.float" />
-    	    </zone>
-    	    <!-- A ratio number-->
-    	    <!-- e.g "6/7"-->
-    	    <zone name="container.expression">
-    	    	<expression>\b(\d+/\d+)\b</expression>
-    	    	<capture number="1" name="literal.numeric.x-ratio" />
-    	    </zone>
-    	    <!-- A decimal integer-->
-    	    <!-- e.g "500"-->
-    	    <zone name="container.expression">
-    	    	<expression>\b(\d+)\b</expression>
-    	    	<capture number="1" name="literal.numeric.integer.decimal" />
-    	    </zone>
-    	</collection>
-    	<collection name="literal.string">
-    	    <!-- A string-->
-    	    <!-- e.g ""hello world""-->
-    	    <zone name="literal.string.quoted">
-    	    	<starts-with>
-    	    		<expression>(")</expression>
-    	    		<capture number="1" name="string.begin" />
-    	    	</starts-with>
-    	    	<ends-with>
-    	    		<expression>(\1)</expression>
-    	    		<capture number="1" name="string.end" />
-    	    	</ends-with>
-    	    	<subzones>
-    	    		<include collection="literal.escape" />
-    	    	</subzones>
-    	    </zone>
-    	</collection>
-    	<collection name="literal.collection">
-    	    <!-- A vector-->
-    	    <!-- e.g "[1 2 3 4]"-->
-    	    <zone name="literal.collection.array">
-    	        <starts-with>
-    	            <expression>(\[)</expression>
-    	            <capture number="1" name="delimiter.balanced.square-brace.begin" />
-    	        </starts-with>
-    	        <ends-with>
-    	            <expression>(\])</expression>
-    	            <capture number="1" name="delimiter.balanced.square-brace.end" />
-    	        </ends-with>
-    	        <subzones>
-    	        	<include collection="language" />
-    	        </subzones>
-    	    </zone>
-    	    <!-- A set-->
-    	    <!-- e.g "#{1 2 3 4}"-->
-    	    <zone name="literal.collection.set">
-    	        <starts-with>
-    	            <expression>#(\{)</expression>
-    	            <capture number="1" name="delimiter.balanced.curly-brace.begin" />
-    	        </starts-with>
-    	        <ends-with>
-    	            <expression>(\})</expression>
-    	            <capture number="1" name="delimiter.balanced.curly-brace.end" />
-    	        </ends-with>
-    	        <subzones>
-    	        	<include collection="language" />
-    	        </subzones>
-    	    </zone>
-    	    <!-- A hash map-->
-    	    <!-- e.g "{:hello 15}"-->
-    	    <zone name="literal.collection.dictionary">
-    	        <starts-with>
-    	            <expression>(\{)</expression>
-    	            <capture number="1" name="delimiter.balanced.curly-brace.begin" />
-    	        </starts-with>
-    	        <ends-with>
-    	            <expression>(\})</expression>
-    	            <capture number="1" name="delimiter.balanced.curly-brace.end" />
-    	        </ends-with>
-    	        <subzones>
-    	        	<include collection="language" />
-    	        </subzones>
-    	    </zone>
-    	</collection>
-    </library>
-</syntax>
+    	</zone>
+    </collection>
+    <collection name="literal">
+      <zone name="literal.collection.x-quote.list">
+        <!-- A quoted expression-->
+        <!-- e.g "'(println (+ 1 2))"-->
+        <starts-with>
+          <expression>('+)(\()</expression>
+          <capture number="1" name="operator.logical.quote" />
+          <capture number="2" name="delimiter.balanced.parenthesis.begin" />
+        </starts-with>
+        <ends-with>
+          <expression>(\))</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.end" />
+        </ends-with>
+        <subzones>
+          <include collection="container.expression.list" />
+        </subzones>
+      </zone>
+      <zone name="literal.collection.x-quote.variable">
+        <!-- A quoted symbol-->
+        <!-- e.g "'hello world"-->
+        <expression>('+)([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%?]*)</expression>
+        <capture number="1" name="operator.logical.quote" />
+        <capture number="2" name="identifier.variable" />
+      </zone>
+      <zone name="literal.collection.x-quote.numeric">
+        <!-- A quoted number-->
+        <!-- e.g "'100e5"-->
+        <expression>('+)(\d+\.?\d*e\d+|\d+\.?\d*|\d+/\d+)</expression>
+        <capture number="1" name="operator.logical.quote" />
+        <capture number="2" name="literal.numeric" />
+      </zone>
+      <zone name="literal.collection.x-quote.string">
+        <!-- A quoted string-->
+        <!-- e.g "'"hey""-->
+        <starts-with>
+          <expression>('+)(")</expression>
+          <capture number="1" name="operator.logical.quote" />
+          <capture number="2" name="string.begin" />
+        </starts-with>
+        <ends-with>
+          <expression>(\2)</expression>
+          <capture number="1" name="string.end" />
+          </ends-with>
+        <subzones>
+          <include collection="literal.escape" />
+          <include collection="literal.string" />
+        </subzones>
+      </zone>
+      <zone name="literal.collection.array">
+        <!-- A vector-->
+        <!-- e.g "[1 2 3 4]"-->
+        <starts-with>
+          <expression>(\[)</expression>
+          <capture number="1" name="delimiter.balanced.square-brace.begin" />
+        </starts-with>
+        <ends-with>
+          <expression>(\])</expression>
+          <capture number="1" name="delimiter.balanced.square-brace.end" />
+        </ends-with>
+        <subzones>
+          <include collection="language" />
+        </subzones>
+        </zone>
+      <zone name="literal.collection.set">
+        
+        <!-- A set-->
+        <!-- e.g "#{1 2 3 4}"-->
+        <starts-with>
+          <expression>(#\{)</expression>
+          <capture number="1" name="delimiter.balanced.curly-brace.begin" />
+        </starts-with>
+        <ends-with>
+          <expression>(\})</expression>
+          <capture number="1" name="delimiter.balanced.curly-brace.end" />
+        </ends-with>
+        <subzones>
+          <include collection="language" />
+        </subzones>
+        </zone>
+      <zone name="literal.collection.dictionary">
+        <!-- A hash map-->
+        <!-- e.g "{:hello 15}"-->
+        <starts-with>
+          <expression>(\{)</expression>
+          <capture number="1" name="delimiter.balanced.curly-brace.begin" />
+        </starts-with>
+        <ends-with>
+          <expression>(\})</expression>
+          <capture number="1" name="delimiter.balanced.curly-brace.end" />
+        </ends-with>
+        <subzones>
+          <include collection="language" />
+        </subzones>
+      </zone>
+      <zone name="literal.keyword">
+        <!-- A keyword-->
+        <!-- e.g ":hello-world" representing itself-->
+        <expression>\s*(\:[\w\+\-\*\!_=]+)\b</expression>
+      </zone>
+      <zone name="literal.keyword.bool.true">
+        <!-- The true keyword-->
+        <!-- e.g "true"-->
+        <expression>\b(true)\b</expression>
+      </zone>
+      <zone name="literal.keyword.bool.false">  
+        <!-- The false keyword-->
+        <!-- e.g "false"-->
+        <expression>\b(false)\b</expression>
+      </zone>
+      <zone name="literal.keyword.nothing">
+        <!-- The nil keyword-->
+        <!-- e.g "nil"-->
+        <expression>\b(nil)\b</expression>
+      </zone>
+      <include collection="literal.numeric" />
+      <include collection="literal.string" />
+    </collection>
+    <collection name="literal.string">
+      <!-- A string-->
+      <!-- e.g ""hello world""-->
+      <zone name="literal.string.quoted">
+        <starts-with>
+          <expression>(")</expression>
+          <capture number="1" name="string.begin" />
+        </starts-with>
+        <ends-with>
+          <expression>(\1)</expression>
+          <capture number="1" name="string.end" />
+        </ends-with>
+        <subzones>
+          <include collection="literal.escape" />
+        </subzones>
+      </zone>
+    </collection>
+    <collection name="literal.numeric">
+      <!-- An exponent number-->
+      <!-- e.g "100e5"-->
+      <zone name="container.expression">
+        <expression>\b(\d+\.?\d*e\d+)\b</expression>
+        <capture number="1" name="literal.numeric.exponent" />
+      </zone>
+      <!-- A float number-->
+      <!-- e.g "5.5"-->
+      <zone name="container.expression">
+        <expression>\b(\d+\.\d*)\b</expression>
+        <capture number="1" name="literal.numeric.float" />
+      </zone>
+      <!-- A ratio number-->
+      <!-- e.g "6/7"-->
+      <zone name="container.expression">
+        <expression>\b(\d+/\d+)\b</expression>
+        <capture number="1" name="literal.numeric.x-ratio" />
+      </zone>
+      <!-- A decimal integer-->
+      <!-- e.g "500"-->
+      <zone name="container.expression">
+        <expression>\b(\d+)\b</expression>
+        <capture number="1" name="literal.numeric.integer.decimal" />
+      </zone>
+    </collection>
+    <collection name="literal.escape">
+      <zone name="literal.escape.quote">
+        <!-- An escaped double quote-->
+        <!-- e.g "\""-->
+        <expression>(\\)(")</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <zone name="literal.escape.newline">
+        <!-- A newline character-->
+        <!-- e.g "\n"-->
+        <expression>(\\)(n)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <zone name="literal.escape.tab">
+        <!-- A tab character-->
+        <!-- e.g "\t"-->
+        <expression>(\\)(t)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <zone name="literal.escape.backspace">
+        <!-- A backspace character-->
+        <!-- e.g "\b"-->
+        <expression>(\\)(b)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <!-- A form feed character-->
+      <!-- e.g "\f"-->
+      <zone name="literal.escape.formfeed">
+        <expression>(\\)(f)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <zone name="literal.escape.carriage-return">
+        <!-- A return character-->
+        <!-- e.g "\r"-->
+        <expression>(\\)(r)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <zone name="literal.escape.backslash">
+        <!-- A backslash character-->
+        <!-- e.g "\\"-->
+        <expression>(\\)(\\)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+      <zone name="literal.escape.unicode-16">
+        <!-- A unicode character-->
+        <!-- e.g "\uDDDD"-->
+        <expression>(\\)(u)([a-fA-F0-9]{4})</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+        <capture number="3" name="identity.hex" />
+      </zone>
+      <zone name="x-invalid">
+        <!-- An invalid escaped character-->
+        <!-- e.g "\55"-->
+        <expression>(\\)(.)</expression>
+        <capture number="1" name="begin" />
+        <capture number="2" name="character" />
+      </zone>
+    </collection>
     
+    <collection name="container.expression.expression">
+      <!-- Add Special Forms here? -->
+      <zone name="container.expression.list.special-form.if">
+        <starts-with>
+          <expression>(\()[\s,]*(if)</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.begin" />
+          <capture number="2" name="container.expression.symbol" />
+        </starts-with>
+        <ends-with>
+          <expression>(\))</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.end" />
+        </ends-with>
+        <subzones>
+          <include collection="container.expression.expression.content" />
+        </subzones>
+      </zone>
+      <zone name="container.expression.list.special-form.defn">
+        <starts-with>
+          <expression>(\()[\s,]*(defn)</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.begin" />
+          <capture number="2" name="container.expression.symbol" />
+        </starts-with>
+        <ends-with>
+          <expression>(\))</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.end" />
+        </ends-with>
+        <subzones>
+          <include collection="container.expression.expression.content" />
+        </subzones>
+      </zone>
+      <zone name="container.expression.list.special-form.fn">
+        <starts-with>
+          <expression>(\()[\s,]*(fn)</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.begin" />
+          <capture number="2" name="container.expression.symbol" />
+        </starts-with>
+        <ends-with>
+          <expression>(\))</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.end" />
+        </ends-with>
+        <subzones>
+          <include collection="container.expression.expression.content" />
+        </subzones>
+      </zone>
+      
+      <zone name="container.expression.list">
+        <starts-with>
+          <expression>(\()</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.begin" />
+        </starts-with>
+        <ends-with>
+          <!-- Need to make it so <must have ends-with> to match extra parenthesis-->
+          <expression>(\))</expression>
+          <capture number="1" name="delimiter.balanced.parenthesis.end" />
+        </ends-with>
+        <subzones>
+          <include collection="container.expression.expression.content" />
+        </subzones>
+      </zone>
+    </collection>
+    <collection name="container.expression.expression.content">
+      <include collection="container.expression.atom" />
+      <include collection="container.expression.list" />
+      <include collection="delimiter.separator.comma" />
+      <include collection="container.expression.symbol" />
+    </collection>
+    <collection name="delimiter.separator.comma">
+      <zone name="delimiter.separator.comma">
+        <!-- Optional comma separator between atoms-->
+        <!-- e.g "(println "hello", "world")"-->
+        <expression>,</expression>
+      </zone>
+    </collection>
+    <collection name="container.expression.symbol">
+      <zone name="container.expression.symbol">
+        <!-- a symbol-->
+        <!-- e.g "println"-->
+        <expression>[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%?]*</expression>
+      </zone>
+    </collection>
+    <collection name="x-invalid">
+      <zone name="x-invalid">
+        <!-- An extra closing bracket-->
+        <!-- e.g "(println (+ 1 2)))"-->
+        <expression>\(|\)</expression>
+      </zone>
+    </collection>
+  </library>
+</syntax>
+

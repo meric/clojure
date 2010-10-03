@@ -4,8 +4,8 @@
 		<class>ESCommentItem</class>
 	  <selector>metadata.comment.line</selector>
 	</recipe>
-	<recipe name="container.expression.s-expr">
-		<selector>container.expression.s-expr:has-child(identifier.function:capture(name))</selector>
+	<recipe name="container.expression.list">
+		<selector>container.expression.list:has-child(symbol:capture(name))</selector>
 		<subrecipes>
 			<include-root-recipes />
 		</subrecipes>

@@ -24,7 +24,7 @@
 	  <key-equivalent>option →</key-equivalent>
 	  <setup>
       <action>next</action>
-      <zone>container.expression.s-expr > *:not(delimiter, s-expr)</zone>
+      <zone>container.expression.list > *:not(delimiter, container.expression.list, parenthesis.begin + symbol), collection:not(x-quote) > *:not(delimiter, container.expression.list)</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
@@ -34,7 +34,7 @@
 	  <key-equivalent>option ←</key-equivalent>
 	  <setup>
       <action>previous</action>
-      <zone>container.expression.s-expr > *:not(delimiter, s-expr)</zone>
+      <zone>container.expression.list > *:not(delimiter, container.expression.list, parenthesis.begin + symbol), collection:not(x-quote) > *:not(delimiter, container.expression.list)</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
@@ -45,7 +45,7 @@
     <key-equivalent>option ↓</key-equivalent>
 	  <setup>
       <action>next</action>
-      <zone>container.expression.s-expr, literal.collection</zone>
+      <zone>container.expression.list:not(x-quote *), literal.collection:not(x-quote)</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
@@ -55,7 +55,7 @@
 	  <key-equivalent>option ↑</key-equivalent>
 	  <setup>
       <action>previous</action>
-      <zone>container.expression.s-expr, literal.collection</zone>
+      <zone>container.expression.list:not(x-quote *), literal.collection:not(x-quote)</zone>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>

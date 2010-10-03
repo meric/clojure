@@ -96,12 +96,18 @@
   return [self matchRegex:zone] && [self matchZone:zone];
 }
 
++ (void)setSelection:(NSRange) range withContext:(id)context {
+  NSArray *selectedRanges=[NSArray arrayWithObject:[NSValue valueWithRange:range]];
+  [context setSelectedRanges:selectedRanges];
+}
+
+
 // Set the zone to become the new selection in the context.
 + (void)setSelectiontoZone:(SXZone *)zone withContext:(id)context {
   NSRange selectedRange=zone.range;
-  NSArray *selectedRanges=[NSArray arrayWithObject:[NSValue valueWithRange:selectedRange]];
-  [context setSelectedRanges:selectedRanges];
+  [CJZoneTree setSelection:selectedRange withContext:context];
 }
+  
 
 // Returns whether range1 is identical to range2.
 + (BOOL) range:(NSRange)range1 equals:(NSRange) range2 {
@@ -248,6 +254,36 @@
   return [CJZoneTree firstChild:[[context syntaxTree] rootZone]];
 }
 
+- (BOOL)selectNextExpr:(id)context{
+  SXZone *expr=[self getNextExpr:context];
+  if (expr == nil){
+    expr=[self getFirstZone:context];
+    while(expr && ![self isExpr:expr]){
+      expr=[CJZoneTree nextZoneTo:expr];
+    }
+  }
+  if (expr){
+    [CJZoneTree setSelectiontoZone:expr withContext:context];
+    return YES;
+  }
+  return NO;
+}
+
+- (BOOL)selectPreviousExpr:(id)context{
+  SXZone *expr=[self getPreviousExpr:context];
+  if (expr == nil){
+    expr=[self getLastZone:context];
+    while(expr && ![self isExpr:expr]){
+      expr=[CJZoneTree previousZoneTo:expr];
+    }
+  }
+  if (expr){
+    [CJZoneTree setSelectiontoZone:expr withContext:context];
+    return YES;
+  }
+  return NO;
+}
+
 // Required: actually perform the action on the context.
 // If an error occurs, pass an NSError via outError (warning: outError may be NULL!)
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError
@@ -257,28 +293,12 @@
 		return NO;
 	}
   if ([action caseInsensitiveCompare:@"next"] == 0){
-    SXZone *expr=[self getNextExpr:context];
-    if (expr == nil){
-      expr=[self getFirstZone:context];
-      while(expr && ![self isExpr:expr]){
-        expr=[CJZoneTree nextZoneTo:expr];
-      }
-    }
-    if (expr){
-      [CJZoneTree setSelectiontoZone:expr withContext:context];
+    if ([self selectNextExpr:context]){
       return YES;
     }
   }
   else if ([action caseInsensitiveCompare:@"previous"] == 0){
-    SXZone *expr=[self getPreviousExpr:context];
-    if (expr == nil){
-      expr=[self getLastZone:context];
-      while(expr && ![self isExpr:expr]){
-        expr=[CJZoneTree previousZoneTo:expr];
-      }
-    }
-    if (expr){
-      [CJZoneTree setSelectiontoZone:expr withContext:context];
+    if ([self selectPreviousExpr:context]){
       return YES;
     }
   }
