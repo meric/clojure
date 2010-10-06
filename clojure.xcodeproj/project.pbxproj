@@ -33,6 +33,7 @@
 		078ED47012537EB2008BB256 /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 078ED45D12537EB2008BB256 /* regtrav.c */; };
 		078ED47112537EB2008BB256 /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 078ED45E12537EB2008BB256 /* regversion.c */; };
 		078ED47212537EB2008BB256 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 078ED45F12537EB2008BB256 /* st.c */; };
+		07C5C97D125C340800E8F46C /* CJIndent.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5C97C125C340800E8F46C /* CJIndent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -94,6 +95,8 @@
 		078ED45E12537EB2008BB256 /* regversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regversion.c; sourceTree = "<group>"; };
 		078ED45F12537EB2008BB256 /* st.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = st.c; sourceTree = "<group>"; };
 		078ED46012537EB2008BB256 /* st.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = st.h; sourceTree = "<group>"; };
+		07C5C97B125C340800E8F46C /* CJIndent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJIndent.h; sourceTree = "<group>"; };
+		07C5C97C125C340800E8F46C /* CJIndent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJIndent.m; sourceTree = "<group>"; };
 		07D0AAAE12518FED00906971 /* TextActions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TextActions; sourceTree = "<group>"; };
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				078ED44412537EB2008BB256 /* CJZoneTree.h */,
 				078ED44512537EB2008BB256 /* CJZoneTree.m */,
 				078ED44612537EB2008BB256 /* CocoaOniguruma */,
+				07C5C97B125C340800E8F46C /* CJIndent.h */,
+				07C5C97C125C340800E8F46C /* CJIndent.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				078ED47012537EB2008BB256 /* regtrav.c in Sources */,
 				078ED47112537EB2008BB256 /* regversion.c in Sources */,
 				078ED47212537EB2008BB256 /* st.c in Sources */,
+				07C5C97D125C340800E8F46C /* CJIndent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

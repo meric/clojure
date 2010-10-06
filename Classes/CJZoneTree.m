@@ -25,9 +25,9 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary bundlePath:(NSString *)bundlePath
 {
   syntaxContext=[dictionary objectForKey:@"syntax-context"];
-  expression=[dictionary objectForKey:@"expression"];
   action=[dictionary objectForKey:@"action"];
   matchingZone=[dictionary objectForKey:@"zone"];
+  expression=[dictionary objectForKey:@"expression"];
 	return self;
 }
 
@@ -65,7 +65,8 @@
 
 // Returns whether the zone matches the regular expression specified in the 
 // "expression" tag.
-- (BOOL) matchRegex:(SXZone *)zone{
+- (BOOL) matchRegex:(SXZone *)zone
+{
   if (![self expression]){
     return YES;
   }
@@ -77,7 +78,8 @@
 }
 
 // Returns whether the zone matches one of the zones specified in the "zone" tag.
-- (BOOL) matchZone:(SXZone *)zone{
+- (BOOL) matchZone:(SXZone *)zone
+{
   if (![self matchingZone]){
     return YES;
   }
@@ -92,25 +94,36 @@
 
 // Checks whether zone matches the regular expression in the "expression" tag as well 
 // as the one of the zones specified in the "zone" tag.
-- (BOOL) isExpr:(SXZone *)zone{
+- (BOOL) isExpr:(SXZone *)zone
+{
   return [self matchRegex:zone] && [self matchZone:zone];
 }
 
-+ (void)setSelection:(NSRange) range withContext:(id)context {
++ (void)setSelection:(NSRange) range withContext:(id)context 
+{
   NSArray *selectedRanges=[NSArray arrayWithObject:[NSValue valueWithRange:range]];
   [context setSelectedRanges:selectedRanges];
 }
 
 
 // Set the zone to become the new selection in the context.
-+ (void)setSelectiontoZone:(SXZone *)zone withContext:(id)context {
++ (void)setSelectiontoZone:(SXZone *)zone withContext:(id)context 
+{
   NSRange selectedRange=zone.range;
+  [CJZoneTree setSelection:selectedRange withContext:context];
+}
+
++ (void)moveCursorToZone:(SXZone *)zone withContext:(id)context 
+{
+  NSRange selectedRange=zone.range;
+  selectedRange.length=0;
   [CJZoneTree setSelection:selectedRange withContext:context];
 }
   
 
 // Returns whether range1 is identical to range2.
-+ (BOOL) range:(NSRange)range1 equals:(NSRange) range2 {
++ (BOOL) range:(NSRange)range1 equals:(NSRange) range2 
+{
   return range1.location==range2.location && range1.length==range2.length;
 }
 
@@ -124,7 +137,8 @@
 }
 
 // Returns the first child of zone.
-+ (SXZone *)firstChild:(SXZone *)zone{
++ (SXZone *)firstChild:(SXZone *)zone
+{
   for (SXZone *i in zone){
     return i;
   }
@@ -132,7 +146,8 @@
 }
 
 // Returns the next child in the child's parent.
-+ (SXZone *)nextSibling:(SXZone *)child{
++ (SXZone *)nextSibling:(SXZone *)child
+{
   SXZone *previous=nil;
   for (SXZone *zone in [child parent]){
     if (previous==child){
@@ -144,7 +159,8 @@
 }
 
 // Returns the previous child in the child's parent.
-+ (SXZone *)previousSibling:(SXZone *)child{
++ (SXZone *)previousSibling:(SXZone *)child
+{
   SXZone *previous=nil;
   for (SXZone *zone in [child parent]){
     if (zone==child){
@@ -156,7 +172,8 @@
 }
 
 // Returns the next zone after the specified zone.
-+ (SXZone *)nextZoneTo:(SXZone *)thisZone{
++ (SXZone *)nextZoneTo:(SXZone *)thisZone
+{
   SXZone *child;
   if (child=[self firstChild:thisZone]){
     return child;
@@ -172,7 +189,8 @@
 }
 
 // Returns the previous zone before the specified zone.
-+ (SXZone *)previousZoneTo:(SXZone *)thisZone{
++ (SXZone *)previousZoneTo:(SXZone *)thisZone
+{
   SXZone *zone;
   if ((zone=[CJZoneTree previousSibling:thisZone])){
     while ([zone childCount] > 0){
@@ -185,7 +203,8 @@
 }
 
 // Returns the expression currently wrapping the cursor
-- (SXZone *)getExpr:(id)context{
+- (SXZone *)getExpr:(id)context
+{
   NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
   SXZone *zone= [[context syntaxTree] zoneAtCharacterIndex:range.location];
   while(zone && ![self isExpr:zone]){
@@ -195,10 +214,11 @@
 }
 
 // Returns the next zone after the zone containing the cursor.
-+ (SXZone *)getNextZone:(id)context{
++ (SXZone *)getNextZone:(id)context
+{
   NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
   SXZone *zone=[[context syntaxTree] rootZone];
-  zone=[self currentZoneInContext:context]; //[[context syntaxTree] rootZone];
+  zone=[self currentZoneInContext:context];
   while(zone && [zone range].location <= range.location){
     zone = [CJZoneTree nextZoneTo:zone];
   }
@@ -206,15 +226,17 @@
 }
 
 // Returns the previous zone before the zone containing the cursor.
-+ (SXZone *)getPreviousZone:(id)context{
++ (SXZone *)getPreviousZone:(id)context
+{
   return [CJZoneTree previousZoneTo:[CJZoneTree getNextZone:context]];
 }
 
 // Returns the next expression if an expression is not being selected,
 // otherwise returns the expression wrapping the cursor
-- (SXZone *)getNextExpr:(id)context{
-  SXZone *expr=[self getExpr:context];
+- (SXZone *)getNextExpr:(id)context
+{
   NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
+  SXZone *expr=[self getExpr:context];
   if (expr == nil || [CJZoneTree range:range equals:[expr range]]){
     expr = [CJZoneTree getNextZone:context];
     while(expr && (![self isExpr:expr] || [CJZoneTree range:[expr range] equals:range])){
@@ -226,9 +248,12 @@
 
 // Returns the previous expression if an expression is not being selected,
 // otherwise returns the expression wrapping the cursor
-- (SXZone *)getPreviousExpr:(id)context{
-  SXZone *expr=[self getExpr:context];
+- (SXZone *)getPreviousExpr:(id)context
+{
   NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
+  range.location-=1;
+  [CJZoneTree setSelection:range withContext:context];
+  SXZone *expr=[self getExpr:context];
   if (expr == nil || [CJZoneTree range:range equals:[expr range]]){
     expr = [CJZoneTree getPreviousZone:context];
     while(expr && (![self isExpr:expr] || [CJZoneTree range:[expr range] equals:range])){
@@ -240,7 +265,8 @@
 }
 
 // Returns the very last zone in the context
-- (SXZone *) getLastZone:(id)context{
+- (SXZone *) getLastZone:(id)context
+{
   SXZone *parent=[[context syntaxTree] rootZone];
   SXZone *child=nil;
   while (child=[CJZoneTree lastChild:parent]) {
@@ -250,11 +276,13 @@
 }
 
 // Returns the very first zone in the context.
-- (SXZone *) getFirstZone:(id)context{
+- (SXZone *) getFirstZone:(id)context
+{
   return [CJZoneTree firstChild:[[context syntaxTree] rootZone]];
 }
 
-- (BOOL)selectNextExpr:(id)context{
+- (BOOL)selectNextExpr:(id)context
+{
   SXZone *expr=[self getNextExpr:context];
   if (expr == nil){
     expr=[self getFirstZone:context];
@@ -269,7 +297,8 @@
   return NO;
 }
 
-- (BOOL)selectPreviousExpr:(id)context{
+- (BOOL)selectPreviousExpr:(id)context
+{
   SXZone *expr=[self getPreviousExpr:context];
   if (expr == nil){
     expr=[self getLastZone:context];
@@ -284,6 +313,36 @@
   return NO;
 }
 
+
+- (BOOL)moveNextExpr:(id)context
+{
+  
+  NSRange range=[[[context selectedRanges] objectAtIndex:0] rangeValue];
+  if ([self selectNextExpr:context]){
+    NSRange newrange=[[[context selectedRanges] objectAtIndex:0] rangeValue];
+    if (range.location==newrange.location){
+      [self selectNextExpr:context];
+      newrange=[[[context selectedRanges] objectAtIndex:0] rangeValue];
+    }
+    newrange.length=0;
+    [CJZoneTree setSelection:newrange withContext:context];
+    return YES;
+  }
+  return NO;
+}
+
+
+- (BOOL)movePreviousExpr:(id)context
+{
+  if ([self selectPreviousExpr:context]){
+    NSRange range=[[[context selectedRanges] objectAtIndex:0] rangeValue];
+    range.length=0;
+    [CJZoneTree setSelection:range withContext:context];
+    return YES;
+  }
+  return NO;
+}
+
 // Required: actually perform the action on the context.
 // If an error occurs, pass an NSError via outError (warning: outError may be NULL!)
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError
@@ -292,13 +351,23 @@
 		NSLog(@"Clojure.sugar Error: Missing action tag in XML");
 		return NO;
 	}
-  if ([action caseInsensitiveCompare:@"next"] == 0){
+  if ([action caseInsensitiveCompare:@"select_next"] == 0){
     if ([self selectNextExpr:context]){
       return YES;
     }
   }
-  else if ([action caseInsensitiveCompare:@"previous"] == 0){
+  else if ([action caseInsensitiveCompare:@"select_previous"] == 0){
     if ([self selectPreviousExpr:context]){
+      return YES;
+    }
+  }
+  else if ([action caseInsensitiveCompare:@"move_next"] == 0){
+    if ([self moveNextExpr:context]){
+      return YES;
+    }
+  }
+  else if ([action caseInsensitiveCompare:@"move_previous"] == 0){
+    if ([self movePreviousExpr:context]){
       return YES;
     }
   }

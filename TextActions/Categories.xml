@@ -6,10 +6,7 @@
 	<category id="clojure.tools.traverse" show="inline separated">
 	  <title>Traverse</title>
 	</category>
-	<category id="clojure.tools.traverse.method.item" show="inline separated">
-	  <title>Item</title>
-	</category>
-	<category id="clojure.tools.traverse.method.expr" show="inline separated">
-	  <title>(...)</title>
+	<category id="clojure.tools.indent" show="inline separated">
+	  <title>Traverse</title>
 	</category>
 </action-categories>

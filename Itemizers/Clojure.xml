@@ -10,4 +10,10 @@
 			<include-root-recipes />
 		</subrecipes>
 	</recipe>
+  <recipe name="container.expression.symbol">
+		<selector>container.expression.symbol:capture(name)</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
 </itemizer>

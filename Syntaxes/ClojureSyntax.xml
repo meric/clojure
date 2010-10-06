@@ -7,7 +7,7 @@
   <library>
     <!--
     whitespace: [\s,]
-    name: [a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%?]*
+    name: [a-zA-Z\+\-\*\!=_/][\w\+\-\*\!=_.%?/]*
     -->
     <collection name="language">
       <include collection="metadata.comment" />
@@ -17,6 +17,7 @@
     </collection>
     <collection name="container.expression.atom">
       <include collection="literal" />
+      <include collection="container.expression.symbol" />
     </collection>
     <collection name="container.expression.list">
       <include collection="container.expression.expression" />
@@ -52,7 +53,7 @@
         <!-- e.g "'(println (+ 1 2))"-->
         <starts-with>
           <expression>('+)(\()</expression>
-          <capture number="1" name="operator.logical.quote" />
+          <capture number="1" name="delimiter.balanced.quote.begin" />
           <capture number="2" name="delimiter.balanced.parenthesis.begin" />
         </starts-with>
         <ends-with>
@@ -66,7 +67,7 @@
       <zone name="literal.collection.x-quote.variable">
         <!-- A quoted symbol-->
         <!-- e.g "'hello world"-->
-        <expression>('+)([a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%?]*)</expression>
+        <expression>('+)([a-zA-Z\+\-\*\!=_/][\w\+\-\*\!=_.%?/]*)</expression>
         <capture number="1" name="operator.logical.quote" />
         <capture number="2" name="identifier.variable" />
       </zone>
@@ -275,49 +276,20 @@
     
     <collection name="container.expression.expression">
       <!-- Add Special Forms here? -->
-      <zone name="container.expression.list.special-form.if">
+      <zone name="container.expression.list.special-form">
         <starts-with>
-          <expression>(\()[\s,]*(if)</expression>
+          <expression>(\()[\s,]*(if|let|defn|fn)</expression>
           <capture number="1" name="delimiter.balanced.parenthesis.begin" />
           <capture number="2" name="container.expression.symbol" />
         </starts-with>
         <ends-with>
-          <expression>(\))</expression>
-          <capture number="1" name="delimiter.balanced.parenthesis.end" />
+        <expression>(\))</expression>
+        <capture number="1" name="delimiter.balanced.parenthesis.end" />
         </ends-with>
         <subzones>
           <include collection="container.expression.expression.content" />
         </subzones>
       </zone>
-      <zone name="container.expression.list.special-form.defn">
-        <starts-with>
-          <expression>(\()[\s,]*(defn)</expression>
-          <capture number="1" name="delimiter.balanced.parenthesis.begin" />
-          <capture number="2" name="container.expression.symbol" />
-        </starts-with>
-        <ends-with>
-          <expression>(\))</expression>
-          <capture number="1" name="delimiter.balanced.parenthesis.end" />
-        </ends-with>
-        <subzones>
-          <include collection="container.expression.expression.content" />
-        </subzones>
-      </zone>
-      <zone name="container.expression.list.special-form.fn">
-        <starts-with>
-          <expression>(\()[\s,]*(fn)</expression>
-          <capture number="1" name="delimiter.balanced.parenthesis.begin" />
-          <capture number="2" name="container.expression.symbol" />
-        </starts-with>
-        <ends-with>
-          <expression>(\))</expression>
-          <capture number="1" name="delimiter.balanced.parenthesis.end" />
-        </ends-with>
-        <subzones>
-          <include collection="container.expression.expression.content" />
-        </subzones>
-      </zone>
-      
       <zone name="container.expression.list">
         <starts-with>
           <expression>(\()</expression>
@@ -335,6 +307,7 @@
     </collection>
     <collection name="container.expression.expression.content">
       <include collection="container.expression.atom" />
+      <include collection="metadata.comment" />
       <include collection="container.expression.list" />
       <include collection="delimiter.separator.comma" />
       <include collection="container.expression.symbol" />
@@ -350,7 +323,7 @@
       <zone name="container.expression.symbol">
         <!-- a symbol-->
         <!-- e.g "println"-->
-        <expression>[a-zA-Z\+\-\*\!=_][\w\+\-\*\!=_.%?]*</expression>
+        <expression>[a-zA-Z\+\-\*\!=_/][\w\+\-\*\!=_.%?/]*</expression>
       </zone>
     </collection>
     <collection name="x-invalid">
