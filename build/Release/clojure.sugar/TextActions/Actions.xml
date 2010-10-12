@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-recipes>
+  <action id="com.meric.indent.expr" category="actions.text.Clojure/clojure.tools.indent">
+    <class>CJIndent</class>
+    <title>Indent New Line</title>
+	  <text-trigger key-equivalent="&#xD;"></text-trigger>
+    <setup>
+      <action>indent_newline</action>
+      <special>^(def|defn|fn|when|do|let|quote|loop|recur)$</special>
+	    <syntax-context>clojure, clojure *</syntax-context>
+    </setup>
+  </action>
+  <action id="com.meric.indent.expr" category="actions.text.Clojure/clojure.tools.indent">
+    <class>CJIndent</class>
+    <title>Indent Selected</title>
+    <setup>
+      <action>indent_selected</action>
+      <special>^(def|defn|fn|when|do|let|quote|loop|recur)$</special>
+	    <syntax-context>clojure, clojure *</syntax-context>
+    </setup>
+  </action>
+	<action id="com.meric.traverse.item.select_next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
+	  <class>CJZoneTree</class>
+	  <title>Select Next Item</title>
+	  <key-equivalent>shift option →</key-equivalent>
+	  <setup>
+      <action>select_next</action>
+      <expression>^[\w\+\-\*\!=_.%?/\:"]+$</expression>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+  <action id="com.meric.traverse.item.select_previous" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
+	  <class>CJZoneTree</class>
+	  <title>Select Previous Item</title>
+	  <key-equivalent>shift option ←</key-equivalent>
+	  <setup>
+      <action>select_previous</action>
+      <expression>^[\w\+\-\*\!=_.%?/\:"]+$</expression>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+	<action id="com.meric.traverse.expr.move_next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
+	  <class>CJZoneTree</class>
+	  <title>Move to Next (...)</title>
+    <key-equivalent>option ↓</key-equivalent>
+	  <setup>
+      <action>move_next</action>
+      <zone>container.expression.list:not(x-quote *), literal.collection:not(x-quote)</zone>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+  <action id="com.meric.traverse.expr.move_previous" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
+	  <class>CJZoneTree</class>
+	  <title>Move to Previous (...)</title>
+	  <key-equivalent>option ↑</key-equivalent>
+	  <setup>
+      <action>move_previous</action>
+      <zone>container.expression.list:not(x-quote *), literal.collection:not(x-quote)</zone>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+  <action id="com.meric.traverse.expr.select_next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
+	  <class>CJZoneTree</class>
+	  <title>Select Next (...)</title>
+    <key-equivalent>shift option ↓</key-equivalent>
+	  <setup>
+      <action>select_next</action>
+      <zone>container.expression.list:not(x-quote *), literal.collection:not(x-quote)</zone>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+  <action id="com.meric.traverse.expr.select_previous" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.expr">
+	  <class>CJZoneTree</class>
+	  <title>Select Previous (...)</title>
+	  <key-equivalent>shift option ↑</key-equivalent>
+	  <setup>
+      <action>select_previous</action>
+      <zone>container.expression.list:not(x-quote *), literal.collection:not(x-quote)</zone>
+	    <syntax-context>clojure, clojure *</syntax-context>
+	  </setup>
+	</action>
+</action-recipes>

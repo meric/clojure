@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itemizer>
+	<recipe name="metadata.comment.line">
+		<class>ESCommentItem</class>
+	  <selector>metadata.comment.line</selector>
+	</recipe>
+	<recipe name="container.expression.list">
+		<selector>container.expression.list:has-child(symbol:capture(name))</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
+  <recipe name="container.expression.symbol">
+		<selector>container.expression.symbol:capture(name)</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
+</itemizer>
