@@ -13,7 +13,6 @@
 		07236F3912519EA10043DF0E /* Itemizers in CopyFiles */ = {isa = PBXBuildFile; fileRef = 075CF8ED1251001500BB8F8F /* Itemizers */; };
 		07236F3A12519EA10043DF0E /* Languages.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 075CF8EE1251001500BB8F8F /* Languages.xml */; };
 		07236F3B12519EA10043DF0E /* README in CopyFiles */ = {isa = PBXBuildFile; fileRef = 075CF8EF1251001500BB8F8F /* README */; };
-		07236F3C12519EA10043DF0E /* Syntaxes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 075CF8F01251001500BB8F8F /* Syntaxes */; };
 		07236F3D12519EA10043DF0E /* SyntaxInjections in CopyFiles */ = {isa = PBXBuildFile; fileRef = 075CF8F11251001500BB8F8F /* SyntaxInjections */; };
 		07236F3E12519EA10043DF0E /* Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 075CF8B71250FF7E00BB8F8F /* Info.plist */; };
 		078ED46212537EB2008BB256 /* CJZoneTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 078ED44512537EB2008BB256 /* CJZoneTree.m */; };
@@ -33,7 +32,11 @@
 		078ED47012537EB2008BB256 /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 078ED45D12537EB2008BB256 /* regtrav.c */; };
 		078ED47112537EB2008BB256 /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 078ED45E12537EB2008BB256 /* regversion.c */; };
 		078ED47212537EB2008BB256 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 078ED45F12537EB2008BB256 /* st.c */; };
+		07A6C21D126490B0005033AC /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 07A6C1F7126490B0005033AC /* Classes */; };
 		07C5C97D125C340800E8F46C /* CJIndent.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5C97C125C340800E8F46C /* CJIndent.m */; };
+		07D1125F1263E72000424A4A /* CJExpr.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1125E1263E72000424A4A /* CJExpr.m */; };
+		07E73E83125CD74C00DB6FB9 /* Syntaxes in Resources */ = {isa = PBXBuildFile; fileRef = 07E73E80125CD74C00DB6FB9 /* Syntaxes */; };
+		07E73E84125CD75500DB6FB9 /* Syntaxes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07E73E80125CD74C00DB6FB9 /* Syntaxes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,13 +46,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 1;
 			files = (
+				07E73E84125CD75500DB6FB9 /* Syntaxes in CopyFiles */,
 				07236F3612519EA10043DF0E /* TextActions in CopyFiles */,
 				07236F3712519EA10043DF0E /* Test in CopyFiles */,
 				07236F3812519EA10043DF0E /* ContextualSettings in CopyFiles */,
 				07236F3912519EA10043DF0E /* Itemizers in CopyFiles */,
 				07236F3A12519EA10043DF0E /* Languages.xml in CopyFiles */,
 				07236F3B12519EA10043DF0E /* README in CopyFiles */,
-				07236F3C12519EA10043DF0E /* Syntaxes in CopyFiles */,
 				07236F3D12519EA10043DF0E /* SyntaxInjections in CopyFiles */,
 				07236F3E12519EA10043DF0E /* Info.plist in CopyFiles */,
 			);
@@ -67,9 +70,7 @@
 		075CF8ED1251001500BB8F8F /* Itemizers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Itemizers; sourceTree = "<group>"; };
 		075CF8EE1251001500BB8F8F /* Languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Languages.xml; sourceTree = "<group>"; };
 		075CF8EF1251001500BB8F8F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		075CF8F01251001500BB8F8F /* Syntaxes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Syntaxes; sourceTree = "<group>"; };
 		075CF8F11251001500BB8F8F /* SyntaxInjections */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SyntaxInjections; sourceTree = "<group>"; };
-		078ED44412537EB2008BB256 /* CJZoneTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJZoneTree.h; sourceTree = "<group>"; };
 		078ED44512537EB2008BB256 /* CJZoneTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJZoneTree.m; sourceTree = "<group>"; };
 		078ED44712537EB2008BB256 /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
 		078ED44812537EB2008BB256 /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
@@ -95,9 +96,14 @@
 		078ED45E12537EB2008BB256 /* regversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regversion.c; sourceTree = "<group>"; };
 		078ED45F12537EB2008BB256 /* st.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = st.c; sourceTree = "<group>"; };
 		078ED46012537EB2008BB256 /* st.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = st.h; sourceTree = "<group>"; };
+		07A6BFB81264487B005033AC /* CJZoneTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJZoneTree.h; sourceTree = "<group>"; };
+		07A6C1F7126490B0005033AC /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
 		07C5C97B125C340800E8F46C /* CJIndent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJIndent.h; sourceTree = "<group>"; };
 		07C5C97C125C340800E8F46C /* CJIndent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJIndent.m; sourceTree = "<group>"; };
 		07D0AAAE12518FED00906971 /* TextActions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TextActions; sourceTree = "<group>"; };
+		07D1125D1263E72000424A4A /* CJExpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJExpr.h; sourceTree = "<group>"; };
+		07D1125E1263E72000424A4A /* CJExpr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJExpr.m; sourceTree = "<group>"; };
+		07E73E80125CD74C00DB6FB9 /* Syntaxes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Syntaxes; sourceTree = "<group>"; };
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -121,11 +127,13 @@
 		078ED44112537EB2008BB256 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				078ED44412537EB2008BB256 /* CJZoneTree.h */,
+				07A6BFB81264487B005033AC /* CJZoneTree.h */,
 				078ED44512537EB2008BB256 /* CJZoneTree.m */,
 				078ED44612537EB2008BB256 /* CocoaOniguruma */,
 				07C5C97B125C340800E8F46C /* CJIndent.h */,
 				07C5C97C125C340800E8F46C /* CJIndent.m */,
+				07D1125D1263E72000424A4A /* CJExpr.h */,
+				07D1125E1263E72000424A4A /* CJExpr.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -180,13 +188,14 @@
 		089C166AFE841209C02AAC07 /* clojure */ = {
 			isa = PBXGroup;
 			children = (
+				07A6C1F7126490B0005033AC /* Classes */,
+				07E73E80125CD74C00DB6FB9 /* Syntaxes */,
 				07D0AAAE12518FED00906971 /* TextActions */,
 				075CF8EA1251001500BB8F8F /* Test */,
 				075CF8EB1251001500BB8F8F /* ContextualSettings */,
 				075CF8ED1251001500BB8F8F /* Itemizers */,
 				075CF8EE1251001500BB8F8F /* Languages.xml */,
 				075CF8EF1251001500BB8F8F /* README */,
-				075CF8F01251001500BB8F8F /* Syntaxes */,
 				075CF8F11251001500BB8F8F /* SyntaxInjections */,
 				075CF8B71250FF7E00BB8F8F /* Info.plist */,
 				078ED44112537EB2008BB256 /* Classes */,
@@ -296,6 +305,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				078ED46512537EB2008BB256 /* COPYING in Resources */,
+				07E73E83125CD74C00DB6FB9 /* Syntaxes in Resources */,
+				07A6C21D126490B0005033AC /* Classes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +334,7 @@
 				078ED47112537EB2008BB256 /* regversion.c in Sources */,
 				078ED47212537EB2008BB256 /* st.c in Sources */,
 				07C5C97D125C340800E8F46C /* CJIndent.m in Sources */,
+				07D1125F1263E72000424A4A /* CJExpr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

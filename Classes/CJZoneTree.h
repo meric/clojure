@@ -6,6 +6,7 @@
 //  Copyright 2010 Sydney University. All rights reserved.
 //
 
+#import "CJExpr.h"
 #import <Cocoa/Cocoa.h>
 #import <EspressoTextActions.h>
 #import <EspressoSyntaxCore.h>
@@ -23,6 +24,7 @@
   NSString* action;
   NSString* expression;
   NSString* matchingZone;
+  CJExpr *exprs;
 }
 
 @property (readonly, copy) NSString* syntaxContext;
@@ -45,39 +47,5 @@
 // If an error occurs, pass an NSError via outError (warning: outError may be NULL!)
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError;
 
-- (BOOL) matchRegex:(SXZone *)zone;
-- (BOOL) matchZone:(SXZone *)zone;
-
-- (BOOL) isExpr:(SXZone *)zone;
-
-+ (void) setSelection:(NSRange) range withContext:(id)context;
-+ (void) setSelectiontoZone:(SXZone *)zone withContext:(id)context;
-
-+ (void) moveCursorToZone:(SXZone *)zone withContext:(id)context;
-+ (BOOL) range:(NSRange)range1 equals:(NSRange) range2;
-
-+ (SXZone *)currentZoneInContext:(id)context;
-
-+ (SXZone *) lastChild:(SXZone *)zone;
-+ (SXZone *) firstChild: (SXZone *)zone;
-
-+ (SXZone *) nextSibling:(SXZone *)child;
-+ (SXZone *) previousSibling:(SXZone *)child;
-
-+ (SXZone *) nextZoneTo:(SXZone *)thisZone;
-+ (SXZone *) previousZoneTo:(SXZone *)thisZone;
-
-+ (SXZone *) getNextZone:(id)context;
-+ (SXZone *) getPreviousZone:(id)context;
-
-- (SXZone *) getLastZone:(id)context;
-- (SXZone *) getFirstZone:(id)context;
-
-- (SXZone *) getExpr:(id)context;
-- (SXZone *) getNextExpr:(id)context;
-- (SXZone *) getPreviousExpr:(id)context;
-
-- (BOOL) selectNextExpr:(id)context;
-- (BOOL) selectPreviousExpr:(id)context;
 
 @end

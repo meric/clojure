@@ -7,17 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CJExpr.h"
 
 @interface CJIndent : NSObject {
   NSString* syntaxContext;
   NSString* action;
-  NSString* expression;
-  NSString* matchingZone;
+  NSString* special;
+  CJExpr *exprs;
 }
 @property (readonly, copy) NSString* syntaxContext;
 @property (readonly, copy) NSString* action;
-@property (readonly, copy) NSString* expression;
-@property (readonly, copy) NSString* matchingZone;
+@property (readonly, copy) NSString* special;
 
 
 // Optional; called instead of -init if implemented.

@@ -1,4 +1,21 @@
+Last Updated October 2010
+
 TODO
-1. Traverse expressions by BFS or DFS using keyboard [done]
-2. REPL evaluation of expressions
-3. Auto-indentation
+1. Traverse expressions by DFS using keyboard [done]
+2. REPL evaluation of expressions [wontfix]
+3. Auto-indentation [done]
+
+Notes
+
+Actions.xml:
+CJIndent
+Made for this sugar only
+The special tag specifies function calls whose contents will always be indented by + 2 spaces instead to the first argument.
+
+CJZoneTree
+Can be used for other sugars
+The zone tag specifies zones that will be identified as a traversable expression.
+Use the expression tag to further filter the zones.
+
+ClojureSyntax.xml:
+Follows the standard specified in the sugar development forum.

@@ -16,8 +16,7 @@
 @implementation CJIndent
 @synthesize syntaxContext;
 @synthesize action;
-@synthesize matchingZone;
-@synthesize expression;
+@synthesize special;
 
 // Optional; called instead of -init if implemented.
 // Dictionary contains the keys defined in the <setup> tag of action definitions. This is 
@@ -27,34 +26,9 @@
 {
   syntaxContext=[dictionary objectForKey:@"syntax-context"];
   action=[dictionary objectForKey:@"action"];
+  special=[dictionary objectForKey:@"special"];
+  exprs=[[CJExpr alloc] initWithRegex:NULL Zones:@"expression.list, collection"];
   return self;
-}
-
-// Returns the zone the current cursor is pointing at.
-+ (SXZone *)currentZoneInContext:(id)context
-{
-  // Get the zone the cursor is at
-  NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
-  SXZone *zone = nil;
-  if ([[context string] length] == range.location) {
-    zone = [[context syntaxTree] rootZone];
-  } else {
-    zone = [[context syntaxTree] zoneAtCharacterIndex:range.location];
-  }
-  return zone;
-}
-
-+ (SXZone *)selector:(NSString*) selector matchesZone:(SXZone *)zone {
-  // Find if the zone inherits from a selector specified zone
-  // return that ancestor
-  SXSelectorGroup *selectors = [SXSelectorGroup selectorGroupWithString:selector];
-  while (zone && ![selectors matches:zone]){
-    zone=[zone parent];
-  }
-  if (zone && [selectors matches:zone]) {
-    return zone;
-  }
-  return nil;
 }
 
 // Required: return whether or not the action can be performed on the context.
@@ -68,142 +42,136 @@
 	}
   // Check on the syntaxContext
 	if ([self syntaxContext] != nil) {
-    if (![CJIndent selector:syntaxContext matchesZone:[CJIndent currentZoneInContext: context]]){
-      return NO;
-    }
+    SXSelectorGroup *selectors = [SXSelectorGroup selectorGroupWithString:[self syntaxContext]];
+		if (![selectors matches:[exprs currentZone:context]]) {
+			return NO;
+		}
 	}
 	return YES;
 }
 
-+ (NSInteger) indentLevel:(NSString *)text{
-  // Find the indentlevel of the string text
+// Return how many indents there are on the line at characterIndex
+- (NSUInteger)indentAtIndex:(NSUInteger)characterIndex withContext:(id)context
+{
+  NSString *string = [[context string] substringWithRange:[[context lineStorage] lineRangeForIndex:characterIndex]];
   NSInteger count=0;
-  for (int i=0; i<=[text length]; i++) {
-    char c=[text characterAtIndex:i];
-    if (c==' '){
-      count++;
-    }
-    else{
-      break;
-    }
+  for (int i=0; i<[string length]; i++) {
+    char c=[string characterAtIndex:i];
+    if (c==' ') count++; else break;
   }
   return count;
 }
 
-+ (NSInteger) lineNumberForZone: (SXZone*)zone withContext:(id)context{
-  // Get the line number for a zone
-  return [[context lineStorage] lineNumberForIndex:[zone range].location];
+// Figure out how many spaces needed to be inserted if the line broke at characterIndex
+- (NSUInteger)toIndentAtIndex:(NSUInteger)characterIndex withContext:(id)context
+{
+  //NSUInteger currentIndent=[self indentAtIndex:characterIndex withContext:context];
+  SXZone *expr = [exprs exprAt:characterIndex withContext:context];
+  if (expr && ([expr range].location == characterIndex 
+               || [expr range].location+[expr range].length == characterIndex)){
+    expr=[exprs parentExpr:expr];
+  }
+  
+  SXZone *top = [exprs topLevelExpr:expr];
+  if (!top) top = [exprs topLevelExpr:[exprs previousExprTo: characterIndex withContext:context]];
+  NSUInteger previousExprIndent = top ? [self indentAtIndex:[top range].location withContext:context] : 0;
+  if (!expr) return previousExprIndent;
+  previousExprIndent = [self indentAtIndex:[expr range].location withContext:context];
+  
+  NSUInteger exprsOnLineAndBeforeIndex=0;
+  NSUInteger currentLine=[[context lineStorage] lineNumberForIndex:characterIndex];
+  if (currentLine == [[context lineStorage] lineNumberForIndex:[expr range].location]) {
+    exprsOnLineAndBeforeIndex--; // first element of list doesn't count; function call.
+  }
+  SXZone *prev=NULL;
+  SXZone *firstOnLine=NULL; // first item on the same line as cursor that is part of expr
+  SXZone *first=[expr childCount] > 1 ? [expr childAtIndex:1] : NULL;
+  for (SXZone *child in expr){
+    if (![[SXSelectorGroup selectorGroupWithString:@"delimiter"] matches:child]) {
+      
+      NSUInteger childLine=[[context lineStorage] lineNumberForIndex:[child range].location+[child range].length];
+      if (childLine == currentLine) {
+        if (firstOnLine == NULL){
+          firstOnLine = child;
+        }
+        if ([child range].location+[child range].length <= characterIndex) {
+          exprsOnLineAndBeforeIndex++;
+        }
+        prev= child;
+      }
+    }
+  }
+  OnigRegexp *regex = [OnigRegexp compile:[self special] ignorecase:YES multiline:NO];
+  if ( [[SXSelectorGroup selectorGroupWithString:@"collection"] matches:expr]){
+    // An array, dictionary, etc
+    NSUInteger location = firstOnLine ? [firstOnLine range].location : [expr range].location + 1;
+    NSUInteger line = [[context lineStorage] lineNumberForIndex:location];
+    return location - [[context lineStorage] lineRangeForLineNumber:line].location;
+  }
+  else if (exprsOnLineAndBeforeIndex == 1 
+           && (!firstOnLine || first && [[regex search:[first text]] count] == 0 )) {
+    // An argument by itself, and not in special form like defn, indent same the argument
+    NSUInteger location = [prev range].location;
+    NSUInteger line = [[context lineStorage] lineNumberForIndex:location];
+    return location - [[context lineStorage] lineRangeForLineNumber:line].location;
+  }
+  else if (exprsOnLineAndBeforeIndex != 0) {
+    // A continuing line
+    return 2 + previousExprIndent;
+  }
+  else if ([exprs exprAt:characterIndex withContext:context]){
+    // blank line in the middle of expression
+    return 2 + previousExprIndent; 
+  }
+  return previousExprIndent;
 }
 
-+ (NSInteger) lineNumberAtIndex:(NSInteger)index withContext:(id)context {
-  // Get the line number at index
-  return [[context lineStorage] lineNumberForIndex:index];
-}
-
-+ (NSInteger) cursorLineNumber:(id)context {
-  // Get the current Line number
-  NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
-  return [CJIndent lineNumberAtIndex:range.location withContext:context];
-}
-
-+ (NSString *)textOfLine:(NSInteger)lineNumber withContext:(id)context {
-  // Get the string of line lineNumber.
-  NSRange range=[[context lineStorage] lineRangeForLineNumber:lineNumber];
-  return [[context string] substringWithRange:range];
-}
-
-+ (void)indentNewLine:(NSUInteger)numberOfSpaces withContext:(id)context {
-  // indent a new line with numberOfSpaces spaces
-  NSRange lineRange=[[[context selectedRanges] objectAtIndex:0] rangeValue];
+// Indent a new line
+- (BOOL) indentNewLine:(id)context
+{
+  NSRange range = [exprs currentRange:context];
+  NSUInteger numberOfSpaces=[self toIndentAtIndex:range.location withContext:context];
+  
   CETextRecipe *recipe = [CETextRecipe textRecipe];
-  NSMutableString* spaces=[NSMutableString stringWithCapacity:numberOfSpaces];
-  [spaces appendString:@"\n"];
+  NSMutableString* spaces=[NSMutableString stringWithString:@"\n"];
   for (int i=1; i<=numberOfSpaces; i++) {
     [spaces appendString:@" "];
   }
-  [recipe addInsertedString:spaces forIndex:lineRange.location];
+  [recipe addInsertedString:spaces forIndex:range.location];
   [context applyTextRecipe:recipe];
+  return YES;
 }
 
 
-+ (NSInteger)indentToExpr:(SXZone*)expr withContext:(id)context{
-  // If it is an (...), indent like
-  /*  
-   * (if true
-   *     false
-   *     (println "hey"))
-   */
-  // or like this, if the previous line has more than one arg
-  /*  
-   * (defn helloworld [] ; has helloworld and [] as arguments
-   *   (println "hello world"))
-   *     
-   */
-  NSInteger lineNumber=[CJIndent cursorLineNumber:context];
-  SXZone *prev=nil;
-  NSInteger count_on_current_line=0;
-  NSInteger count_on_expr_line=0;
-  
-  for (SXZone *child in expr){
-    if ([CJIndent lineNumberForZone:child withContext:context]==[CJIndent lineNumberForZone:expr withContext:context]
-        && ![CJIndent selector:@"delimiter" matchesZone:child] && child!=[expr childAtIndex:1]){
-      prev=child;
-      count_on_expr_line++;
+// Re-indent the selected text in context
+- (BOOL) indentSelected:(id)context
+{
+  NSRange range = [exprs currentRange:context];
+  NSRange rangeToIndent;
+  rangeToIndent.location=[[context lineStorage] lineStartIndexLessThanIndex:range.location+1];
+  rangeToIndent.length=[[context lineStorage] lineStartIndexGreaterThanIndex:range.location + range.length-1] - rangeToIndent.location;
+  NSString *text=[[context string] substringWithRange:rangeToIndent];
+  NSRange lineRange; lineRange.location=0; lineRange.length=0;
+  NSLog(text);
+  CETextRecipe *recipe = [CETextRecipe textRecipe];
+  while (lineRange.location < [text length]){
+    // Indent each line
+    lineRange=[text lineRangeForRange:lineRange];
+    NSUInteger lineIndex = rangeToIndent.location + lineRange.location;
+    NSUInteger toIndent = [self toIndentAtIndex:lineIndex-1 withContext:context];
+    NSUInteger originalIndent=[self indentAtIndex:lineIndex withContext:context];
+    // Can't delete text... so if original indent is bigger, there's nothing we can do.
+    if (toIndent > originalIndent){
+      NSMutableString* spaces=[NSMutableString stringWithString:@""];
+      for (int i = 0; i < toIndent - originalIndent; i++){
+        [spaces appendString:@" "];
+      }
+      [recipe addInsertedString:spaces forIndex:lineIndex];
     }
-    if (([CJIndent lineNumberForZone:child withContext:context]==lineNumber) 
-        && ![CJIndent selector:@"delimiter" matchesZone:child] && child!=[expr childAtIndex:1]){
-      prev=child;
-      count_on_current_line++;
-      count_on_expr_line = 0;
-    }
+    lineRange.location = lineRange.location + lineRange.length;
+    lineRange.length=0;
   }
-  NSInteger count = count_on_current_line+count_on_expr_line;
-  
-  BOOL empty=[CJIndent selector:@"delimiter" matchesZone:[expr childAtIndex:0]] && [expr childCount] > 2 && [CJIndent selector:@"delimiter" matchesZone:[expr childAtIndex:2]];
-  if (prev == nil || [expr childCount] <= 2 || empty || count >= 2){
-    NSInteger indent=[CJIndent indentLevel:[CJIndent textOfLine:[CJIndent lineNumberAtIndex:[expr range].location withContext:context] withContext:context]]+2;
-    return indent;
-  }
-  else {
-    NSInteger toDelim=[prev range].location - [[context lineStorage] lineRangeForIndex:[prev range].location].location;
-    return toDelim;
-  }
-}
-
-+ (NSInteger)indentToCollection:(SXZone*)literal withContext:(id)context{
-  // If it is an [...], #{...} etc, indent like
-  /*
-   * #{1
-   *   2
-   *   3}
-   */
-  NSInteger lineNumber=[CJIndent cursorLineNumber:context];
-  NSInteger toDelim=[literal range].location - [[context lineStorage] lineRangeForIndex:[literal range].location].location;
-  NSInteger modifier=[[literal childAtIndex:0] range].length;
-  if ([CJIndent lineNumberAtIndex:[literal range].location+[literal range].length withContext:context] == lineNumber){
-    modifier=0;
-  }
-  return toDelim+modifier;
-}
-
-+ (BOOL) indentNewLine:(id)context{
-  NSRange range = [[[context selectedRanges] objectAtIndex:0] rangeValue];
-  
-  SXZone *literal=[CJIndent selector:@"collection" matchesZone:[[context syntaxTree] zoneAtCharacterIndex:range.location]];
-  
-  if (literal){
-    [CJIndent indentNewLine:[CJIndent indentToCollection:literal withContext:context] withContext:context];
-    return YES;
-  }
-  
-  SXZone *expr=[CJIndent selector:@"expression.list" matchesZone:[[context syntaxTree] zoneAtCharacterIndex:range.location]];
-
-  if (expr){
-    [CJIndent indentNewLine:[CJIndent indentToExpr:expr withContext:context] withContext:context];
-    return YES;
-  }
-  
-  [CJIndent indentNewLine:0 withContext:context];
+  [context applyTextRecipe:recipe];
   return YES;
 }
 
@@ -216,10 +184,18 @@
 		return NO;
 	}
   if ([action caseInsensitiveCompare:@"indent_newline"] == 0){
-    return [CJIndent indentNewLine:context];
+    return [self indentNewLine:context];
   }
-  // TODO: indent a selection.
+  if ([action caseInsensitiveCompare:@"indent_selected"] == 0){
+    return [self indentSelected:context];
+  }
   return NO;
+}
+
+- (void)dealloc
+{
+  [exprs release];
+	[super dealloc];
 }
 
 

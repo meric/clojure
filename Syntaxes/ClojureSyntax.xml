@@ -7,7 +7,7 @@
   <library>
     <!--
     whitespace: [\s,]
-    name: [a-zA-Z\+\-\*\!=_/][\w\+\-\*\!=_.%?/]*
+    name: [a-zA-Z\+\-\*\!=_/&lt;&gt;][\w\+\-\*\!=_.%?/&lt;&gt;]*
     -->
     <collection name="language">
       <include collection="metadata.comment" />
@@ -67,7 +67,7 @@
       <zone name="literal.collection.x-quote.variable">
         <!-- A quoted symbol-->
         <!-- e.g "'hello world"-->
-        <expression>('+)([a-zA-Z\+\-\*\!=_/][\w\+\-\*\!=_.%?/]*)</expression>
+        <expression>('+)([a-zA-Z\+\-\*\!=_/&lt;&gt;][\w\+\-\*\!=_.%?/&lt;&gt;]*)</expression>
         <capture number="1" name="operator.logical.quote" />
         <capture number="2" name="identifier.variable" />
       </zone>
@@ -278,7 +278,7 @@
       <!-- Add Special Forms here? -->
       <zone name="container.expression.list.special-form">
         <starts-with>
-          <expression>(\()[\s,]*(if|let|defn|fn)</expression>
+          <expression>(\()[\s,]*(if|let|defn|fn)[\s,]+</expression>
           <capture number="1" name="delimiter.balanced.parenthesis.begin" />
           <capture number="2" name="container.expression.symbol" />
         </starts-with>
@@ -323,7 +323,7 @@
       <zone name="container.expression.symbol">
         <!-- a symbol-->
         <!-- e.g "println"-->
-        <expression>[a-zA-Z\+\-\*\!=_/][\w\+\-\*\!=_.%?/]*</expression>
+        <expression>[a-zA-Z\+\-\*\!=_/&lt;&gt;][\w\+\-\*\!=_.%?/&lt;&gt;]*</expression>
       </zone>
     </collection>
     <collection name="x-invalid">

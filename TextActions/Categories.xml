@@ -3,7 +3,10 @@
 	<category id="actions.text.Clojure" show="sub">
 	  <title>Clojure</title>
 	</category>
-	<category id="clojure.tools.traverse" show="inline separated">
+	<category id="clojure.tools.traverse.item" show="inline separated">
+	  <title>Traverse</title>
+	</category>
+	<category id="clojure.tools.traverse.expr" show="inline separated">
 	  <title>Traverse</title>
 	</category>
 	<category id="clojure.tools.indent" show="inline separated">

@@ -6,8 +6,17 @@
 	  <text-trigger key-equivalent="&#xD;"></text-trigger>
     <setup>
       <action>indent_newline</action>
-      <zone>container.expression.list, literal, symbol, expression:has-child(numeric)</zone>
-	    <syntax-context>container.expression.list, container.expression.list *, clojure</syntax-context>
+      <special>^(def|defn|fn|when|do|let|quote|loop|recur)$</special>
+	    <syntax-context>clojure, clojure *</syntax-context>
+    </setup>
+  </action>
+  <action id="com.meric.indent.expr" category="actions.text.Clojure/clojure.tools.indent">
+    <class>CJIndent</class>
+    <title>Indent Selected</title>
+    <setup>
+      <action>indent_selected</action>
+      <special>^(def|defn|fn|when|do|let|quote|loop|recur)$</special>
+	    <syntax-context>clojure, clojure *</syntax-context>
     </setup>
   </action>
 	<action id="com.meric.traverse.item.select_next" category="actions.text.Clojure/clojure.tools.traverse/clojure.tools.traverse.item">
@@ -16,7 +25,7 @@
 	  <key-equivalent>shift option →</key-equivalent>
 	  <setup>
       <action>select_next</action>
-      <expression>^[\w\+\-\*\!=_.%?/]+$</expression>
+      <expression>^[\w\+\-\*\!=_.%?/\:"]+$</expression>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
@@ -26,7 +35,7 @@
 	  <key-equivalent>shift option ←</key-equivalent>
 	  <setup>
       <action>select_previous</action>
-      <expression>^[\w\+\-\*\!=_.%?/]+$</expression>
+      <expression>^[\w\+\-\*\!=_.%?/\:"]+$</expression>
 	    <syntax-context>clojure, clojure *</syntax-context>
 	  </setup>
 	</action>
