@@ -13,6 +13,7 @@
   <action id="com.meric.indent.expr" category="actions.text.Clojure/clojure.tools.indent">
     <class>CJIndent</class>
     <title>Indent Selected</title>
+    <key-equivalent>cmd T</key-equivalent>
     <setup>
       <action>indent_selected</action>
       <special>^(def|defn|fn|when|do|let|quote|loop|recur)$</special>

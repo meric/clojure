@@ -28,8 +28,10 @@
 - (SXZone *) topLevelExpr: (SXZone *)expr;
 - (NSArray *) childExprs:(SXZone *)expr;
 - (SXZone *) exprAt:(NSUInteger)characterIndex withContext:(id)context;
+- (SXZone *) nextZoneTo:(SXZone *)thisZone;
 - (SXZone *) nextZone:(id)context;
 - (SXZone *) nextExprTo: (NSUInteger)characterIndex withContext:(id)context;
+- (SXZone *) previousZoneTo:(SXZone *)thisZone;
 - (SXZone *) previousZone:(id)context;
 - (SXZone *) previousExprTo: (NSUInteger)characterIndex withContext:(id)context;
 

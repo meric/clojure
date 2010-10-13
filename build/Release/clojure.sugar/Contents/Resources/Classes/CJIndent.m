@@ -72,14 +72,15 @@
     expr=[exprs parentExpr:expr];
   }
   
-  SXZone *top = [exprs topLevelExpr:expr];
-  if (!top) top = [exprs topLevelExpr:[exprs previousExprTo: characterIndex withContext:context]];
-  NSUInteger previousExprIndent = top ? [self indentAtIndex:[top range].location withContext:context] : 0;
-  if (!expr) return previousExprIndent;
-  previousExprIndent = [self indentAtIndex:[expr range].location withContext:context];
+  NSUInteger currentLine=[[context lineStorage] lineNumberForIndex:characterIndex];
+  NSUInteger previousExprIndent = [self indentAtIndex:[expr range].location withContext:context];
+  if (!expr) {
+    SXZone *previousZone=[exprs previousZoneTo:[exprs previousExprTo: characterIndex withContext:context]];
+    SXZone *top = [exprs topLevelExpr:previousZone];
+    return [self indentAtIndex:[top range].location withContext:context];
+  }
   
   NSUInteger exprsOnLineAndBeforeIndex=0;
-  NSUInteger currentLine=[[context lineStorage] lineNumberForIndex:characterIndex];
   if (currentLine == [[context lineStorage] lineNumberForIndex:[expr range].location]) {
     exprsOnLineAndBeforeIndex--; // first element of list doesn't count; function call.
   }
@@ -96,8 +97,8 @@
         }
         if ([child range].location+[child range].length <= characterIndex) {
           exprsOnLineAndBeforeIndex++;
+          prev = child;
         }
-        prev= child;
       }
     }
   }
@@ -126,54 +127,50 @@
   return previousExprIndent;
 }
 
-// Indent a new line
-- (BOOL) indentNewLine:(id)context
+//indent the line at lineNumber
+- (BOOL) indentLine:(NSUInteger)lineNumber withContext:(id) context
 {
-  NSRange range = [exprs currentRange:context];
-  NSUInteger numberOfSpaces=[self toIndentAtIndex:range.location withContext:context];
-  
+  NSRange lineRange=[[context lineStorage] lineRangeForLineNumber:lineNumber];
+  NSUInteger previousLineIndex=lineRange.location-1;
+  NSUInteger numberOfSpaces = [self toIndentAtIndex:previousLineIndex withContext:context];
+  NSUInteger originalNumberOfSpaces=[self indentAtIndex:lineRange.location withContext:context];
   CETextRecipe *recipe = [CETextRecipe textRecipe];
-  NSMutableString* spaces=[NSMutableString stringWithString:@"\n"];
+  NSMutableString* spaces=[NSMutableString stringWithString:@""];
   for (int i=1; i<=numberOfSpaces; i++) {
     [spaces appendString:@" "];
   }
-  [recipe addInsertedString:spaces forIndex:range.location];
+  NSRange replacementRange;
+  replacementRange.location=lineRange.location;
+  replacementRange.length=originalNumberOfSpaces;
+  [recipe addReplacementString:spaces forRange:replacementRange];
   [context applyTextRecipe:recipe];
   return YES;
 }
 
+// Insert a new line, indent the new, blank line.
+- (BOOL) indentNewLine:(id)context
+{
+  NSRange range = [exprs currentRange:context];
+  NSUInteger lineNumber=[[context lineStorage] lineNumberForIndex:range.location];
+  NSMutableString* newLine=[NSMutableString stringWithString:@"\n"];
+  CETextRecipe *recipe = [CETextRecipe textRecipe];
+  [recipe addInsertedString:newLine forIndex:range.location];
+  [context applyTextRecipe:recipe];
+  return [self indentLine:lineNumber+1 withContext:context];
+}
 
 // Re-indent the selected text in context
 - (BOOL) indentSelected:(id)context
 {
   NSRange range = [exprs currentRange:context];
-  NSRange rangeToIndent;
-  rangeToIndent.location=[[context lineStorage] lineStartIndexLessThanIndex:range.location+1];
-  rangeToIndent.length=[[context lineStorage] lineStartIndexGreaterThanIndex:range.location + range.length-1] - rangeToIndent.location;
-  NSString *text=[[context string] substringWithRange:rangeToIndent];
-  NSRange lineRange; lineRange.location=0; lineRange.length=0;
-  NSLog(text);
-  CETextRecipe *recipe = [CETextRecipe textRecipe];
-  while (lineRange.location < [text length]){
-    // Indent each line
-    lineRange=[text lineRangeForRange:lineRange];
-    NSUInteger lineIndex = rangeToIndent.location + lineRange.location;
-    NSUInteger toIndent = [self toIndentAtIndex:lineIndex-1 withContext:context];
-    NSUInteger originalIndent=[self indentAtIndex:lineIndex withContext:context];
-    // Can't delete text... so if original indent is bigger, there's nothing we can do.
-    if (toIndent > originalIndent){
-      NSMutableString* spaces=[NSMutableString stringWithString:@""];
-      for (int i = 0; i < toIndent - originalIndent; i++){
-        [spaces appendString:@" "];
-      }
-      [recipe addInsertedString:spaces forIndex:lineIndex];
-    }
-    lineRange.location = lineRange.location + lineRange.length;
-    lineRange.length=0;
+  NSUInteger startLine = [[context lineStorage] lineNumberForIndex:range.location];
+  NSUInteger endLine=[[context lineStorage] lineNumberForIndex:range.location+range.length];
+  for (NSUInteger i= startLine; i<=endLine; i++) {
+    [self indentLine:i withContext:context];
   }
-  [context applyTextRecipe:recipe];
   return YES;
 }
+
 
 // Required: actually perform the action on the context.
 // If an error occurs, pass an NSError via outError (warning: outError may be NULL!)
